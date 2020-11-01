@@ -12,10 +12,13 @@ class _Watchlist_screenState extends State<Watchlist_screen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.grey[800],
       appBar: AppBar(
         title: Text('Watchlist'),
+        backgroundColor: Colors.black,
       ),
       body: Container(
+        color: Colors.grey[800],
         margin: EdgeInsets.symmetric(vertical: 20.0),
         height: 340.0,
         padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 10.0),
@@ -46,15 +49,15 @@ class BuildContainer extends StatelessWidget {
     return Container(
       width: 160.0,
       child: Card(
-        color: Colors.yellow[700].withOpacity(0.3),
+        color: Colors.grey[700],
         child: Wrap(
           children: <Widget> [
-    Image(
-      image: AssetImage(imagename),
-    ),
-    ListTile(  
-      title: Text(title),
-    ),
+            Image(
+              image: AssetImage(imagename),
+            ),
+            ListTile(  
+              title: Text(title,style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),),
+            ),
     
           ]
         ),
