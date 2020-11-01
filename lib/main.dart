@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'Localizations/applocalization.dart';
 import 'Views/Home.dart';
+import 'Views/Movie_Details.dart';
 
 void main() {
   runApp(MyApp());
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
         //RETURN THE DEFAULT LOCALE IF NOT SUPPORTED LOCALE IS CHOSEN
         return supportedLocales.first;
       },
-      home: Home(),
+      home: MovieDetails(),
     );
   }
 }

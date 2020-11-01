@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:movies_app/Localizations/applocalization.dart';
+import 'package:movies_app/Views/RegisterUi.dart';
 import 'package:movies_app/Widgets/buttons.dart';
+
+import 'LoginUi.dart';
 
 class Home extends StatefulWidget {
   @override
@@ -10,12 +13,12 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-  AnimationController _animationController;
+
   Animation<double> _animationLogin;
   Animation<double> _animationMoveUp;
   Animation<double> _batmanIn;
   Animation<double> _buttonIn;
-
+  AnimationController _animationController;
   void setFirstAnimations() {
     _animationController =
         AnimationController(vsync: this, duration: Duration(seconds: 3));
@@ -106,10 +109,13 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           ),
                           Transform.scale(
                             scale: (_animationLogin.value),
-                            child: Image.asset(
-                              "assets/images/batman_logo.png",
-                              width: 200,
-                              fit: BoxFit.fitWidth,
+                            child: Hero(
+                              tag: "logo",
+                              child: Image.asset(
+                                "assets/images/batman_logo.png",
+                                width: 200,
+                                fit: BoxFit.fitWidth,
+                              ),
                             ),
                           ),
                           Divider(),
@@ -120,16 +126,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                               child: Column(
                                 children: [
                                   CustomButton(
-                                    text:       Applocalications.of(context).translation("third_string"),
-                                    onPressedd: () {},
+                                    text: Applocalications.of(context)
+                                        .translation("third_string"),
+                                    onPressedd: () {         Get.to(Login());},
                                     isLeftSide: true,
                                   ),
                                   SizedBox(
                                     height: 15,
                                   ),
                                   CustomButton(
-                                    text:       Applocalications.of(context).translation("fourth_string"),
-                                    onPressedd: () {},
+                                    text: Applocalications.of(context)
+                                        .translation("fourth_string"),
+                                    onPressedd: () {
+                                      Get.to(RegisterScreen());
+                                    },
                                     isLeftSide: false,
                                   )
                                 ],
