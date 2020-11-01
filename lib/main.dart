@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:movies_app/Views/Main_Screen.dart';
+import 'package:movies_app/Widgets/movies_wheel.dart';
 import 'Localizations/applocalization.dart';
 import 'Views/Home.dart';
+import 'Views/Movie_Details.dart';
 
 void main() {
   runApp(MyApp());
@@ -39,7 +42,11 @@ class MyApp extends StatelessWidget {
         //RETURN THE DEFAULT LOCALE IF NOT SUPPORTED LOCALE IS CHOSEN
         return supportedLocales.first;
       },
-      home: Home(),
+      home: Scaffold(
+        backgroundColor: Colors.black,
+        body: MainScreen(),
+      )//Home(),
+  
     );
   }
 }

@@ -1,16 +1,4 @@
 # movies_app
+Movie app is still under progress , The idea of the project is to show all upcoming , in theatre , recently playing movies, and the option to get recommendations based on the selected movie 
 
-A new Flutter project.
-
-## Getting Started
-
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![123287322_730981164155245_5756232383943933498_n](https://user-images.githubusercontent.com/60745552/97741351-d1634c00-1a9f-11eb-885d-d132233710ae.gif)
