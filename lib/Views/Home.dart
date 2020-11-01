@@ -21,7 +21,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   AnimationController _animationController;
   void setFirstAnimations() {
     _animationController =
-        AnimationController(vsync: this, duration: Duration(seconds: 3));
+        AnimationController(vsync:this, duration: Duration(seconds: 3));
     _animationLogin = Tween(begin: 20.0, end: 1.0).animate(CurvedAnimation(
         curve: Interval(0.0, 0.25), parent: _animationController));
     // TODO: implement initState
