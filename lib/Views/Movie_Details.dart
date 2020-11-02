@@ -22,15 +22,15 @@ class MovieDetails extends StatelessWidget {
                 colorFilter: ColorFilter.mode(
                     Colors.black.withOpacity(0.3), BlendMode.dstIn),
                 image: AssetImage("assets/images/backgroundImage.jpg"))),
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Column(
+        child: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
                     width: Get.width,
-                    height: 300,
+                    height: Get.height / 2.53,
                     child: ClipRRect(
                       borderRadius:
                           BorderRadius.only(bottomLeft: Radius.circular(50)),
@@ -176,60 +176,60 @@ class MovieDetails extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-            Positioned(
-              top: 260,
-              right: 0,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 35, vertical: 15),
-                height: 80,
-                width: Get.width - 30,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 2,
-                        color: Colors.yellow[600],
-                        offset: Offset(0, 3))
-                  ],
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(40),
-                    bottomLeft: Radius.circular(40),
+              Positioned(
+                top: 260,
+                right: 0,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 35, vertical: 15),
+                  height: Get.height/9.467,
+                  width: Get.width - 30,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                          blurRadius: 2,
+                          color: Colors.yellow[600],
+                          offset: Offset(0, 3))
+                    ],
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(40),
+                      bottomLeft: Radius.circular(40),
+                    ),
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TapDetails(
+                        fontAwesomeIcons: FontAwesomeIcons.solidStar,
+                        firstText: " 8.2 /",
+                        secondText: "10",
+                        iconColor: Colors.yellow[600],
+                      ),
+                      TapDetails(
+                          fontAwesomeIcons: FontAwesomeIcons.heart,
+                          firstText: "Favourite ",
+                          secondText: "This",
+                          iconColor: Colors.red),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "+18",
+                            style: TextStyle(
+                                fontWeight: FontWeight.bold, fontSize: 18),
+                          ),
+                          FaIcon(
+                            FontAwesomeIcons.times,
+                            color: Colors.red[700],
+                          )
+                        ],
+                      )
+                    ],
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    TapDetails(
-                      fontAwesomeIcons: FontAwesomeIcons.solidStar,
-                      firstText: " 8.2 /",
-                      secondText: "10",
-                      iconColor: Colors.yellow[600],
-                    ),
-                    TapDetails(
-                        fontAwesomeIcons: FontAwesomeIcons.heart,
-                        firstText: "Favourite ",
-                        secondText: "This",
-                        iconColor: Colors.red),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "+18",
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold, fontSize: 18),
-                        ),
-                        FaIcon(
-                          FontAwesomeIcons.times,
-                          color: Colors.red[700],
-                        )
-                      ],
-                    )
-                  ],
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
