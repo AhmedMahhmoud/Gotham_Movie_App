@@ -16,41 +16,51 @@ class _MoviesWheelState extends State<MoviesWheel> {
   Widget build(BuildContext context) {
     print(widget.movieModel[0].movieTitle);
 
-    return AspectRatio(
-      aspectRatio: 1.6,
-      child: PageView.builder(
-        itemCount: widget.movieModel.length,
-        controller: pageController,
-        itemBuilder: (context, index) => Container(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(20, 20, 20, 10),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    image: DecorationImage(
-                      image: NetworkImage(widget.movieModel[index].moviePoster),
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: AspectRatio(
+        aspectRatio: 1.6,
+        child: PageView.builder(
+          itemCount: widget.movieModel.length,
+          controller: pageController,
+          itemBuilder: (context, index) => Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                  flex: 12,
+                  child: Container(
+                    margin: EdgeInsets.fromLTRB(10, 10, 10, 10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      image: DecorationImage(
+                        image: NetworkImage(widget.movieModel[index].moviePoster),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Text(
-                widget.movieModel[index].movieTitle,
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Montserrat-Bold',
-                    fontSize: 16),
-              ),
-              Text(
-                'genre: Action/Drama',
-                style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'Montserrat',
-                    fontSize: 12),
-              )
-            ],
+                Expanded(
+                  flex: 1,
+                                child: Text(
+                    widget.movieModel[index].movieTitle,textAlign: TextAlign.center,
+                    style: TextStyle(
+                        color: Colors.white,
+                        fontFamily: 'Montserrat-Bold',
+                        fontSize: 12),
+                  ),
+                ),
+                Expanded(
+                  flex: 1,
+                                child: Text(
+                    '★'+widget.movieModel[index].movieRate.toString(),
+                    style: TextStyle(
+                        color: Colors.yellow[800],
+                        fontFamily: 'Montserrat',
+                        fontSize: 12),
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
