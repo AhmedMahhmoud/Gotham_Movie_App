@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'package:movies_app/Services/MovieApi.dart';
+import 'package:movies_app/Views/Movie_Details.dart';
 import 'package:movies_app/Views/watchlist.dart';
 
 import 'package:movies_app/Widgets/movies_wheel.dart';
@@ -77,7 +78,7 @@ class _MainScreenState extends State<MainScreen> {
                       TheTab('Upcoming'),
                       MoviesWheel(provider),
                       InkWell(
-                          onTap: () => Get.to(Watchlist_screen()),
+                          onTap: () => Get.to(MovieDetails()),
                           child: MyWatchListButton())
                     ],
                   ),
