@@ -1,11 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/Services/MovieApi.dart';
 
 class Watchlist_screen extends StatefulWidget {
+
+  //Watchlist_screen({this.imageName, this.title});
+
+  String imageName;
+  String title;
+
   @override
   _Watchlist_screenState createState() => _Watchlist_screenState();
 }
 
 class _Watchlist_screenState extends State<Watchlist_screen> {
+
+  List <MovieApi> watchlist = [];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

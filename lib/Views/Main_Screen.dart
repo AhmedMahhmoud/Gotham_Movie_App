@@ -78,6 +78,12 @@ class _MainScreenState extends State<MainScreen> {
                       MoviesWheel(provider),
                       InkWell(
                           onTap: () => Get.to(Watchlist_screen()),
+                          // onTap: (){
+                          //   MaterialPageRoute(builder: (context){
+                          //       return Watchlist_screen()
+                          //     }
+                          //   );
+                          // },
                           child: MyWatchListButton())
                     ],
                   ),
