@@ -36,7 +36,6 @@ class MovieApi with ChangeNotifier {
       }
     });
 
-
     final response2 = await http.get(
         "https://api.themoviedb.org/3/movie/popular?api_key=$apiKey&language=en-US&page=1");
     final decodedResponse2 = jsonDecode(response2.body);
@@ -61,7 +60,6 @@ class MovieApi with ChangeNotifier {
       }
     });
 
-        
     final response3 = await http.get(
         "https://api.themoviedb.org/3/movie/top_rated?api_key=$apiKey&language=en-US&page=1");
     final decodedResponse3 = jsonDecode(response3.body);
@@ -85,7 +83,7 @@ class MovieApi with ChangeNotifier {
         notifyListeners();
       }
     });
-
-    
   }
+
+  
 }

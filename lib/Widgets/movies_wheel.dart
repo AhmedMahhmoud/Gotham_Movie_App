@@ -15,7 +15,6 @@ class _MoviesWheelState extends State<MoviesWheel> {
   @override
   Widget build(BuildContext context) {
     print(widget.movieModel[0].movieTitle);
-
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: AspectRatio(
@@ -34,15 +33,17 @@ class _MoviesWheelState extends State<MoviesWheel> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
                       image: DecorationImage(
-                        image: NetworkImage(widget.movieModel[index].moviePoster),
+                        image: NetworkImage(
+                            widget.movieModel[index].moviePoster),
                       ),
                     ),
                   ),
                 ),
                 Expanded(
                   flex: 1,
-                                child: Text(
-                    widget.movieModel[index].movieTitle,textAlign: TextAlign.center,
+                  child: Text(
+                    widget.movieModel[index].movieTitle,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.white,
                         fontFamily: 'Montserrat-Bold',
@@ -51,8 +52,8 @@ class _MoviesWheelState extends State<MoviesWheel> {
                 ),
                 Expanded(
                   flex: 1,
-                                child: Text(
-                    '★'+widget.movieModel[index].movieRate.toString(),
+                  child: Text(
+                    '★' + widget.movieModel[index].movieRate.toString(),
                     style: TextStyle(
                         color: Colors.yellow[800],
                         fontFamily: 'Montserrat',
