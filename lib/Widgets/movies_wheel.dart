@@ -1,21 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:movies_app/Models/MovieModel.dart';
 
 class MoviesWheel extends StatefulWidget {
+  List<MovieModel> movieModel;
+  MoviesWheel(this.movieModel);
   @override
   _MoviesWheelState createState() => _MoviesWheelState();
 }
 
 class _MoviesWheelState extends State<MoviesWheel> {
-  PageController pageController = PageController(initialPage: 1 ,viewportFraction: 0.4);
+  PageController pageController =
+      PageController(initialPage: 1, viewportFraction: 0.4);
 
   @override
   Widget build(BuildContext context) {
+    print(widget.movieModel[0].movieTitle);
+
     return AspectRatio(
       aspectRatio: 1.6,
       child: PageView.builder(
+        itemCount: widget.movieModel.length,
         controller: pageController,
         itemBuilder: (context, index) => Container(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Expanded(
                 child: Container(
@@ -23,19 +31,17 @@ class _MoviesWheelState extends State<MoviesWheel> {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     image: DecorationImage(
-                      image: NetworkImage(
-                          'https://www.vintagemovieposters.co.uk/wp-content/uploads/2020/01/IMG_2893.jpeg'),
-                      fit: BoxFit.fill,
+                      image: NetworkImage(widget.movieModel[index].moviePoster),
                     ),
                   ),
                 ),
               ),
               Text(
-                'Joker',
+                widget.movieModel[index].movieTitle,
                 style: TextStyle(
                     color: Colors.white,
                     fontFamily: 'Montserrat-Bold',
-                    fontSize: 20),
+                    fontSize: 16),
               ),
               Text(
                 'genre: Action/Drama',
