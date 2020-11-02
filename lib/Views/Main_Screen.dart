@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import 'package:movies_app/Services/MovieApi.dart';
+import 'package:movies_app/Views/Movie_Details.dart';
 import 'package:movies_app/Views/watchlist.dart';
 
 import 'package:movies_app/Widgets/movies_wheel.dart';
@@ -18,14 +20,19 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<MovieApi>(context, listen: false).upComing;
+    final uc = Provider.of<MovieApi>(context, listen: false).upComing;
+    final pop = Provider.of<MovieApi>(context, listen: false).popular;
+    final top = Provider.of<MovieApi>(context, listen: false).topRated;
     return Scaffold(
       backgroundColor: Colors.black,
       body: FutureBuilder(
-        future: Provider.of<MovieApi>(context, listen: false).fetchUpcoming(),
+        future: Provider.of<MovieApi>(context, listen: false).fetchAll(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(child: Center(
+                                        child: Lottie.asset(
+                                            "assets/lottie/batman.json"),
+            ));
           }
 
           return SafeArea(
@@ -65,17 +72,17 @@ class _MainScreenState extends State<MainScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       TheTab('Popular'),
-                      MoviesWheel(provider),
+                      MoviesWheel(pop),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.06,
                       ),
                       TheTab('Top Rated'),
-                      MoviesWheel(provider),
+                      MoviesWheel(top),
                       SizedBox(
                         height: MediaQuery.of(context).size.height * 0.06,
                       ),
                       TheTab('Upcoming'),
-                      MoviesWheel(provider),
+                      MoviesWheel(uc),
                       InkWell(
                           onTap: () => Get.to(Watchlist_screen()),
                           // onTap: (){
