@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:movies_app/Models/MovieModel.dart';
-import 'package:movies_app/Screens/watchlist.dart';
+
 import 'package:movies_app/Services/MovieApi.dart';
+import 'package:movies_app/Views/watchlist.dart';
 
 import 'package:movies_app/Widgets/movies_wheel.dart';
 import 'package:movies_app/Widgets/myWatchListButton.dart';
@@ -10,20 +10,15 @@ import 'package:provider/provider.dart';
 import '../Widgets/thetab.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
-import 'Movie_Details.dart';
-
 class MainScreen extends StatefulWidget {
   @override
   _MainScreenState createState() => _MainScreenState();
 }
 
-
-
 class _MainScreenState extends State<MainScreen> {
- 
   @override
-  Widget build(BuildContext context) { 
-    final provider=Provider.of<MovieApi>(context,listen: false).upComing;
+  Widget build(BuildContext context) {
+    final provider = Provider.of<MovieApi>(context, listen: false).upComing;
     return Scaffold(
       backgroundColor: Colors.black,
       body: FutureBuilder(
@@ -32,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(child: CircularProgressIndicator());
           }
-        
+
           return SafeArea(
             child: CustomScrollView(
               slivers: [
