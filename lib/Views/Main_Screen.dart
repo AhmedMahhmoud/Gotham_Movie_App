@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lottie/lottie.dart';
 
 import 'package:movies_app/Services/MovieApi.dart';
 import 'package:movies_app/Views/Movie_Details.dart';
@@ -28,7 +29,10 @@ class _MainScreenState extends State<MainScreen> {
         future: Provider.of<MovieApi>(context, listen: false).fetchAll(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return Center(child: Center(
+                                        child: Lottie.asset(
+                                            "assets/lottie/batman.json"),
+            ));
           }
 
           return SafeArea(
@@ -80,7 +84,7 @@ class _MainScreenState extends State<MainScreen> {
                       TheTab('Upcoming'),
                       MoviesWheel(uc),
                       InkWell(
-                          onTap: () => Get.to(MovieDetails()),
+                          onTap: () => Get.to(Watchlist_screen()),
                           child: MyWatchListButton())
                     ],
                   ),

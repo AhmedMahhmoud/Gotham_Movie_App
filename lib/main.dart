@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:movies_app/Models/MovieCastModel.dart';
 import 'package:movies_app/Services/MovieApi.dart';
 import 'package:movies_app/Views/Main_Screen.dart';
 import 'package:movies_app/Widgets/movies_wheel.dart';
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => MovieApi(),
-        )
+        ),
       ],
       child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
