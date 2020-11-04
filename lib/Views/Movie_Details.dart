@@ -266,26 +266,26 @@ class MovieDetails extends StatelessWidget {
                                 secondText: "10",
                                 iconColor: Colors.yellow[600],
                               ),
-                              // TapDetails(
-                              //     fontAwesomeIcons: FontAwesomeIcons.heart,
-                              //     firstText: "Favourite ",
-                              //     secondText: "This",
-                              //     iconColor: Colors.red),
-                              RaisedButton(
-                                onPressed: (){
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context){
-                                        return Watchlist_screen(
-                                          imageName: moviePoster,
-                                          title: movieName,
-                                        );
-                                      }
-                                    )
-                                  );
-                                }
-                              ),
+                              TapDetails(
+                                  fontAwesomeIcons: FontAwesomeIcons.heart,
+                                  firstText: "Favourite ",
+                                  secondText: "This",
+                                  iconColor: Colors.red),
+                              // RaisedButton(
+                              //   onPressed: (){
+                              //     Navigator.push(
+                              //       context,
+                              //       MaterialPageRoute(
+                              //         builder: (context){
+                              //           return Watchlist_screen(
+                              //             imageName: moviePoster,
+                              //             title: movieName,
+                              //           );
+                              //         }
+                              //       )
+                              //     );
+                              //   }
+                              // ),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [

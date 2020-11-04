@@ -49,4 +49,26 @@ class FirebaseServices with ChangeNotifier {
       print(e);
     }
   }
+
+  Future <void> SignInUser(String email, String password, BuildContext context) async{
+    try
+    {
+     final user = await _auth
+        .signInWithEmailAndPassword(email: email, password: password).catchError((e){
+          if (e.toString().contains("The password is invalid"))
+            showErrorDiaglog("Sign in Failed",
+                "Wrong password", context);
+          else if(e.toString().contains("There is no user record corresponding to this identifier"))
+            showErrorDiaglog("Sign in Failed",
+            "Invalid email", context);
+        });
+          
+    }
+    catch(e)
+    {
+      print(e);
+    }
+
+  }
+
 }
