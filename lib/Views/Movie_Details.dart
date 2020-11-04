@@ -7,6 +7,7 @@ import 'package:lottie/lottie.dart';
 import 'package:lottie/lottie.dart';
 import 'package:movies_app/Models/MovieCastModel.dart';
 import 'package:movies_app/Services/MovieApi.dart';
+import 'package:movies_app/Views/watchlist.dart';
 import 'package:movies_app/Widgets/CastWidget.dart';
 import 'package:movies_app/Widgets/GenereMovieDetails.dart';
 import 'package:movies_app/Widgets/TapMovieDetails.dart';
@@ -265,11 +266,26 @@ class MovieDetails extends StatelessWidget {
                                 secondText: "10",
                                 iconColor: Colors.yellow[600],
                               ),
-                              TapDetails(
-                                  fontAwesomeIcons: FontAwesomeIcons.heart,
-                                  firstText: "Favourite ",
-                                  secondText: "This",
-                                  iconColor: Colors.red),
+                              // TapDetails(
+                              //     fontAwesomeIcons: FontAwesomeIcons.heart,
+                              //     firstText: "Favourite ",
+                              //     secondText: "This",
+                              //     iconColor: Colors.red),
+                              RaisedButton(
+                                onPressed: (){
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context){
+                                        return Watchlist_screen(
+                                          imageName: moviePoster,
+                                          title: movieName,
+                                        );
+                                      }
+                                    )
+                                  );
+                                }
+                              ),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [

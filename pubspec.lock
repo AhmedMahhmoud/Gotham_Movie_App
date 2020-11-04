@@ -5,14 +5,14 @@ packages:
     dependency: transitive
     description:
       name: archive
-      url: "https://pub.flutter-io.cn"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.13"
   args:
     dependency: transitive
     description:
       name: args
-      url: "https://pub.flutter-io.cn"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "1.6.0"
   async:
@@ -68,14 +68,14 @@ packages:
     dependency: transitive
     description:
       name: convert
-      url: "https://pub.flutter-io.cn"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.1"
   crypto:
     dependency: transitive
     description:
       name: crypto
-      url: "https://pub.flutter-io.cn"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.5"
   cupertino_icons:
@@ -146,14 +146,14 @@ packages:
     dependency: transitive
     description:
       name: logging
-      url: "https://pub.flutter-io.cn"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "0.11.4"
   lottie:
     dependency: "direct main"
     description:
       name: lottie
-      url: "https://pub.flutter-io.cn"
+      url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.0+1"
   matcher:
