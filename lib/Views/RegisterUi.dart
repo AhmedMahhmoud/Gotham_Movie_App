@@ -1,8 +1,11 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:movies_app/Services/Firebase.dart';
 
 import 'package:movies_app/Widgets/SignUpButtons.dart';
+import 'package:provider/provider.dart';
 
 const butColor = 0xFFFDE86A;
 
@@ -25,6 +28,8 @@ class _RegisterScreenState extends State<RegisterScreen>
     // TODO: implement initState
     super.initState();
   }
+
+  var futureValue;
 
   @override
   void dispose() {

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "410710307136",
+    "firebase_url": "https://movieapp-bbc2e.firebaseio.com",
+    "project_id": "movieapp-bbc2e",
+    "storage_bucket": "movieapp-bbc2e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410710307136:android:917ff1b341feb2fe8c8aa5",
+        "android_client_info": {
+          "package_name": "com.example.movies_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "410710307136-8r36sb7jm1fg1ncbiop88epqt6ofenm6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDMvhw-iZP0cTBORdFXTKUEDmABQ_yMTFY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "410710307136-8r36sb7jm1fg1ncbiop88epqt6ofenm6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,6 +1,11 @@
 import 'dart:ui';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:movies_app/Services/Firebase.dart';
+
+import 'package:provider/provider.dart';
 
 import 'buttons.dart';
 
@@ -11,16 +16,52 @@ class SignUpButtons extends StatefulWidget {
   _SignUpButtonsState createState() => _SignUpButtonsState();
 }
 
+var obsecure = false;
+
 class _SignUpButtonsState extends State<SignUpButtons> {
   final _formKey = GlobalKey<FormState>();
+  Map<String, String> _authmap = {
+    'email': "",
+    'password': "",
+    'name': "",
+  };
+  var futureValue = false;
+  Future<bool> emailAvailable(String email) async {
+    final response = await FirebaseFirestore.instance
+        .collection("users")
+        .where("email", isEqualTo: email)
+        .get()
+        .then((value) {
+      print(value);
+      if (value.docs.length == 0) {
+        setState(() {
+          futureValue = true;
+        });
+      } else {
+        setState(() {
+          futureValue = false;
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
-    void _saveForm() {
+    void _saveForm(String operation) async {
+      final firebaseProvider =
+          Provider.of<FirebaseServices>(context, listen: false);
       if (!_formKey.currentState.validate()) {
         return;
       }
-      print("form validated");
+      _formKey.currentState.save();
+      if (operation == "REGISTER") {
+        await firebaseProvider
+            .signUpUser(_authmap["name"], _authmap["email"],
+                _authmap["password"], context)
+            .catchError((e) {
+          print(e);
+        });
+      }
     }
 
     return Form(
@@ -28,26 +69,20 @@ class _SignUpButtonsState extends State<SignUpButtons> {
       child: Column(
         children: [
           widget.regOrLogin == "REGISTER"
-              ? FormRegisterButton(
-                  label: "Username",
-                  obscure: false,
-                )
+              ? textFormField(false, "Username", () {})
               : Container(),
           SizedBox(
             height: 20,
           ),
-          FormRegisterButton(
-            label: "Email",
-            obscure: false,
-          ),
+          textFormField(false, "Email", () {}),
           SizedBox(
             height: 20,
           ),
-          FormRegisterButton(
-            label: "Password",
-            obscure: true,
-            iconColor: Colors.white,
-          ),
+          textFormField(obsecure, "Password", () {
+            setState(() {
+              obsecure = !obsecure;
+            });
+          }),
           SizedBox(
             height: 20,
           ),
@@ -55,7 +90,7 @@ class _SignUpButtonsState extends State<SignUpButtons> {
             padding: const EdgeInsets.symmetric(horizontal: 10),
             child: CustomButton(
               onPressedd: () {
-                _saveForm();
+                _saveForm("REGISTER");
               },
               text: widget.regOrLogin == "REGISTER" ? "SUBMIT" : "SIGN IN",
             ),
@@ -64,46 +99,52 @@ class _SignUpButtonsState extends State<SignUpButtons> {
       ),
     );
   }
-}
 
-class FormRegisterButton extends StatefulWidget {
-  FormRegisterButton({this.label, this.obscure, this.iconColor});
-
-  final String label;
-  bool obscure;
-  Color iconColor;
-
-  @override
-  _FormRegisterButtonState createState() => _FormRegisterButtonState();
-}
-
-class _FormRegisterButtonState extends State<FormRegisterButton> {
-  @override
-  Widget build(BuildContext context) {
+  Widget textFormField(bool obsecure, String label, Function function) {
     return TextFormField(
-        obscureText: widget.obscure,
+        onChanged: (value) {
+          if (label == "Email" &&
+              (value.contains("@") && value.contains(".com"))) {
+            emailAvailable(value);
+          } else {
+            setState(() {
+              futureValue = false;
+            });
+          }
+        },
+        obscureText: obsecure,
+        onSaved: (newValue) {
+          if (label == "Username") {
+            _authmap["name"] = newValue.trim();
+          } else if (label == "Email") {
+            _authmap["email"] = newValue.trim();
+          } else if (label == "Password") {
+            _authmap["password"] = newValue.trim();
+          }
+        },
         validator: (value) {
-          if (widget.label == "Username") {
+          if (label == "Username") {
             if (value.isEmpty) {
               return ("Username is required !");
             } else if (value.length < 3) {
               return ("Minimum username length is 3");
             }
           }
-          if (widget.label == "Email") {
+          if (label == "Email") {
             if (value.isEmpty) {
               return ("Email is required !");
             } else if (!value.contains("@") || !value.contains(".com")) {
               return ("Please enter a valid email !");
             }
           }
-          if (widget.label == "Password") {
+          if (label == "Password") {
             if (value.isEmpty) {
               return ("Password is required !");
             } else if (value.length < 5) {
-              setState(() {
-                widget.iconColor = Colors.red;
-              });
+              // setState(() {
+              //   widget.iconColor = Colors.red;
+              // });
+              function();
               return ("Password is too short minimun is 5");
             }
           }
@@ -112,29 +153,41 @@ class _FormRegisterButtonState extends State<FormRegisterButton> {
         cursorColor: Colors.yellow,
         decoration: InputDecoration(
           errorStyle: TextStyle(letterSpacing: 2, fontSize: 12),
-          suffixIcon: widget.label == "Password"
+          suffixIcon: label == "Password"
               ? InkWell(
                   onTap: () {
-                    setState(() {
-                      widget.obscure = !widget.obscure;
-                    });
+                    function();
                   },
                   child: Container(
                     padding: EdgeInsets.only(right: 8),
                     child: Image.asset(
                       "assets/images/batman_logo.png",
-                      color: widget.iconColor,
                       width: 3,
                       height: 5,
                     ),
                   ),
                 )
-              : null,
+              : label == "Email" && widget.regOrLogin == "REGISTER"
+                  ? futureValue
+                      ? Container(
+                          padding: EdgeInsets.all(15),
+                          child: FaIcon(
+                            FontAwesomeIcons.check,
+                            color: Colors.green,
+                          ),
+                        )
+                      : Container(
+                          padding: EdgeInsets.all(15),
+                          child: FaIcon(
+                            FontAwesomeIcons.times,
+                            color: Colors.red,
+                          ))
+                  : null,
           border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15),
               borderSide: BorderSide(color: Colors.white, width: 1)),
           floatingLabelBehavior: FloatingLabelBehavior.always,
-          labelText: widget.label,
+          labelText: label,
           labelStyle: TextStyle(
               color: Colors.white, fontSize: 17, fontWeight: FontWeight.bold),
           focusedBorder: OutlineInputBorder(
