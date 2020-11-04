@@ -228,7 +228,7 @@ class MovieDetails extends StatelessWidget {
                                       style: fontColor,
                                     );
                                   },
-                                  future: Provider.of<MovieApi>(context)
+                                  future: Provider.of<MovieApi>(context,listen: false)
                                       .movieCast(movieID),
                                 )
                               ],

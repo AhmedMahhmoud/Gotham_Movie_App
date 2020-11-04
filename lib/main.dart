@@ -1,16 +1,20 @@
+import 'package:firebase_core/firebase_core.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:movies_app/Models/MovieCastModel.dart';
+import 'package:movies_app/Services/Firebase.dart';
+
 import 'package:movies_app/Services/MovieApi.dart';
+import 'package:movies_app/Views/Home.dart';
 import 'package:movies_app/Views/Main_Screen.dart';
-import 'package:movies_app/Widgets/movies_wheel.dart';
+
 import 'package:provider/provider.dart';
 import 'Localizations/applocalization.dart';
-import 'Views/Home.dart';
-import 'Views/Movie_Details.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -22,6 +26,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => MovieApi(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => FirebaseServices(),
         ),
       ],
       child: GetMaterialApp(
@@ -53,7 +60,7 @@ class MyApp extends StatelessWidget {
           },
           home: Scaffold(
             backgroundColor: Colors.black,
-            body: MainScreen(),
+            body: Home(),
           ) //Home(),
 
           ),
