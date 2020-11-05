@@ -7,7 +7,7 @@ import 'package:movies_app/Services/Firebase.dart';
 
 import 'package:movies_app/Services/MovieApi.dart';
 import 'package:movies_app/Views/Home.dart';
-import 'package:movies_app/Views/Main_Screen.dart';
+
 
 import 'package:provider/provider.dart';
 import 'Localizations/applocalization.dart';

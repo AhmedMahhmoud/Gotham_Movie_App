@@ -4,8 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:lottie/lottie.dart';
-import 'package:movies_app/Models/MovieCastModel.dart';
+
 import 'package:movies_app/Services/MovieApi.dart';
 import 'package:movies_app/Widgets/CastWidget.dart';
 import 'package:movies_app/Widgets/GenereMovieDetails.dart';

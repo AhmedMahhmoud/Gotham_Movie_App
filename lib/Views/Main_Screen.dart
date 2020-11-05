@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:movies_app/Services/MovieApi.dart';
-import 'package:movies_app/Views/Movie_Details.dart';
+
 import 'package:movies_app/Views/watchlist.dart';
 
 import 'package:movies_app/Widgets/movies_wheel.dart';

@@ -42,6 +42,7 @@ class _SignUpButtonsState extends State<SignUpButtons> {
           futureValue = false;
         });
       }
+      
     });
   }
 
