@@ -9,13 +9,14 @@ class TapDetails extends StatefulWidget {
     this.fontAwesomeIcons,
     this.iconColor,
     Key key,
+
   }) : super(key: key);
 
   IconData fontAwesomeIcons;
   String firstText;
   final String secondText;
   final Color iconColor;
-
+  
   @override
   _TapDetailsState createState() => _TapDetailsState();
 }
