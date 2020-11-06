@@ -1,11 +1,11 @@
 import 'dart:ui';
 
-import 'package:cloud_firestore/cloud_firestore.dart';
+
 import 'package:flutter/material.dart';
-import 'package:movies_app/Services/Firebase.dart';
+
 
 import 'package:movies_app/Widgets/SignUpButtons.dart';
-import 'package:provider/provider.dart';
+
 
 const butColor = 0xFFFDE86A;
 
@@ -25,7 +25,7 @@ class _RegisterScreenState extends State<RegisterScreen>
     _buttonIn = CurvedAnimation(
         curve: Interval(0.75, 0.9), parent: _animationController);
     _animationController.forward();
-    // TODO: implement initState
+   
     super.initState();
   }
 
@@ -34,7 +34,7 @@ class _RegisterScreenState extends State<RegisterScreen>
   @override
   void dispose() {
     _animationController.dispose();
-    // TODO: implement dispose
+   
     super.dispose();
   }
 

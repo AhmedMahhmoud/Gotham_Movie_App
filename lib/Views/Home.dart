@@ -24,7 +24,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         AnimationController(vsync:this, duration: Duration(seconds: 3));
     _animationLogin = Tween(begin: 20.0, end: 1.0).animate(CurvedAnimation(
         curve: Interval(0.0, 0.25), parent: _animationController));
-    // TODO: implement initState
+   
     _animationMoveUp = CurvedAnimation(
         curve: Interval(0.15, 0.50), parent: _animationController);
     _batmanIn = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -45,7 +45,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void dispose() {
     _animationController.dispose();
 
-    // TODO: implement dispose
+  
     super.dispose();
   }
 
@@ -128,7 +128,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                   CustomButton(
                                     text: Applocalications.of(context)
                                         .translation("third_string"),
-                                    onPressedd: () {         Get.to(Login());},
+                                    onPressedd: () {        
+                                          Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) => Login()));},
                                     isLeftSide: true,
                                   ),
                                   SizedBox(

@@ -17,14 +17,14 @@ class _LoginState extends State<Login> with SingleTickerProviderStateMixin {
     _buttonIn = CurvedAnimation(
         curve: Interval(0.75, 0.9), parent: _animationController);
     _animationController.forward();
-    // TODO: implement initState
+  
     super.initState();
   }
 
   @override
   void dispose() {
     _animationController.dispose();
-    // TODO: implement dispose
+   
     super.dispose();
   }
 

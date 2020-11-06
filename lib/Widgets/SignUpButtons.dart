@@ -16,7 +16,8 @@ class SignUpButtons extends StatefulWidget {
   _SignUpButtonsState createState() => _SignUpButtonsState();
 }
 
-var obsecure = false;
+var obsecure = true;
+var isLoading = false;
 
 class _SignUpButtonsState extends State<SignUpButtons> {
   final _formKey = GlobalKey<FormState>();
@@ -58,8 +59,23 @@ class _SignUpButtonsState extends State<SignUpButtons> {
         await firebaseProvider
             .signUpUser(_authmap["name"], _authmap["email"],
                 _authmap["password"], context)
+            .then((value) => Navigator.pop(context))
             .catchError((e) {
           print(e);
+        });
+      }
+      if (operation == "LOGIN") {
+        setState(() {
+          isLoading = true;
+        });
+        await firebaseProvider.SignInUser(
+                _authmap["email"], _authmap["password"], context)
+            .then((value) => Navigator.pop(context))
+            .catchError((e) {
+          print(e);
+        });
+        setState(() {
+          isLoading = false;
         });
       }
     }
@@ -88,12 +104,21 @@ class _SignUpButtonsState extends State<SignUpButtons> {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: CustomButton(
-              onPressedd: () {
-                _saveForm("REGISTER");
-              },
-              text: widget.regOrLogin == "REGISTER" ? "SUBMIT" : "SIGN IN",
-            ),
+            child: isLoading
+                ? Center(
+                    child: CircularProgressIndicator(
+                      backgroundColor: Colors.yellow[700],
+                    ),
+                  )
+                : CustomButton(
+                    onPressedd: () {
+                      _saveForm(widget.regOrLogin == "REGISTER"
+                          ? "REGISTER"
+                          : "LOGIN");
+                    },
+                    text:
+                        widget.regOrLogin == "REGISTER" ? "SUBMIT" : "SIGN IN",
+                  ),
           ),
         ],
       ),

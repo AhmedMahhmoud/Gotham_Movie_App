@@ -1,10 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:movies_app/Services/MovieApi.dart';
-import 'package:movies_app/Views/Movie_Details.dart';
-import 'package:movies_app/Views/watchlist.dart';
+
+import 'FavouritesScreen.dart';
 
 import 'package:movies_app/Widgets/movies_wheel.dart';
 import 'package:movies_app/Widgets/myWatchListButton.dart';
@@ -19,19 +22,42 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   @override
+  void initState() {
+    print(FirebaseAuth.instance.currentUser.uid);
+    // TODO: implement initState
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final uc = Provider.of<MovieApi>(context, listen: false).upComing;
     final pop = Provider.of<MovieApi>(context, listen: false).popular;
     final top = Provider.of<MovieApi>(context, listen: false).topRated;
     return Scaffold(
+      floatingActionButton: Align(
+        alignment: Alignment.bottomLeft,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 15),
+          child: FloatingActionButton(
+              tooltip: "Logout",
+              onPressed: () async {
+                await FirebaseAuth.instance.signOut();
+              },
+              backgroundColor: Colors.yellow,
+              child: Icon(
+                Icons.exit_to_app,
+                color: Colors.black,
+              )),
+        ),
+      ),
       backgroundColor: Colors.black,
       body: FutureBuilder(
         future: Provider.of<MovieApi>(context, listen: false).fetchAll(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: Center(
-                                        child: Lottie.asset(
-                                            "assets/lottie/batman.json"),
+            return Center(
+                child: Center(
+              child: Lottie.asset("assets/lottie/batman.json"),
             ));
           }
 
@@ -84,7 +110,7 @@ class _MainScreenState extends State<MainScreen> {
                       TheTab('Upcoming'),
                       MoviesWheel(uc),
                       InkWell(
-                          onTap: () => Get.to(Watchlist_screen()),
+                          onTap: () => Get.to(FavouritesScreen()),
                           // onTap: (){
                           //   MaterialPageRoute(builder: (context){
                           //       return Watchlist_screen()
