@@ -33,7 +33,7 @@ class _SignUpButtonsState extends State<SignUpButtons> {
         .where("email", isEqualTo: email)
         .get()
         .then((value) {
-      print(value);
+    
       if (value.docs.length == 0) {
         setState(() {
           futureValue = true;

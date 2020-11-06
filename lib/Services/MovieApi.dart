@@ -63,7 +63,7 @@ class MovieApi with ChangeNotifier {
             movieTitle: result["title"],
           ),
         );
-        notifyListeners();
+      
       }
     });
 
@@ -87,7 +87,7 @@ class MovieApi with ChangeNotifier {
             movieTitle: result["title"],
           ),
         );
-        notifyListeners();
+        
       }
     });
 
@@ -111,7 +111,7 @@ class MovieApi with ChangeNotifier {
             movieTitle: result["title"],
           ),
         );
-        notifyListeners();
+       
       }
     });
   }

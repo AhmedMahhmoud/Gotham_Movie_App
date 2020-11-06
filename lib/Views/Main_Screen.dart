@@ -23,7 +23,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
-    print(FirebaseAuth.instance.currentUser.uid);
+ 
     // TODO: implement initState
     super.initState();
   }
@@ -110,7 +110,7 @@ class _MainScreenState extends State<MainScreen> {
                       TheTab('Upcoming'),
                       MoviesWheel(uc),
                       InkWell(
-                          onTap: () => Get.to(FavouritesScreen()),
+                          onTap: () => Get.to(FavouritesScreen(pop)),
                           // onTap: (){
                           //   MaterialPageRoute(builder: (context){
                           //       return Watchlist_screen()

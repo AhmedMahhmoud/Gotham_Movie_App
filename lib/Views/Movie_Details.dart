@@ -268,6 +268,8 @@ class MovieDetails extends StatelessWidget {
                                 iconColor: Colors.yellow[600],
                               ),
                               TapDetails(
+                                  movieTitle: movieName,
+                                  moviePoster: moviePoster,
                                   movieID: movieID.toString(),
                                   fontAwesomeIcons: FontAwesomeIcons.heart,
                                   firstText: "Favourite ",

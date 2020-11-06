@@ -1,5 +1,3 @@
-
-
 class MovieModel {
   String movieTitle;
   int movieId;

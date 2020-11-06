@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movies_app/Models/MovieModel.dart';
@@ -16,8 +17,6 @@ class _MoviesWheelState extends State<MoviesWheel> {
 
   @override
   Widget build(BuildContext context) {
-    
-
     return Padding(
       padding: const EdgeInsets.all(4.0),
       child: AspectRatio(
