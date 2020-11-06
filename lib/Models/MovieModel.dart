@@ -10,7 +10,7 @@ class MovieModel {
   String movieReleaseDate;
   var movieRate;
   String movieSummary;
-  bool adult;
+  String adult;
   String movieHorizontalPoster;
   List<dynamic> genere;
 

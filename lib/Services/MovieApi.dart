@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:http/http.dart' as http;
+import 'package:movies_app/Models/MovieCastModel.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'package:provider/provider.dart';
@@ -11,6 +12,36 @@ class MovieApi with ChangeNotifier {
   List<MovieModel> upComing = [];
   List<MovieModel> popular = [];
   List<MovieModel> topRated = [];
+  List<MovieCastModel> movieCastModel = [];
+  List<String> genereList = [];
+  Future<void> movieCast(int movieId) async {
+    final response = await http.get(
+        "https://api.themoviedb.org/3/movie/$movieId/credits?api_key=$apiKey");
+    final decodedReponse = jsonDecode((response.body));
+    movieCastModel.clear();
+    decodedReponse["cast"].forEach((actor) {
+      if (response.statusCode == 200) {
+        movieCastModel.add(MovieCastModel(
+            actorImage:
+                "https://image.tmdb.org/t/p/w500" + actor["profile_path"],
+            actorName: actor["name"],
+            actorNameInMovie: actor["character"]));
+      }
+    });
+    notifyListeners();
+  }
+
+  Future<void> fetchGenere(int movieId) async {
+    final response = await http.get(
+        "https://api.themoviedb.org/3/movie/$movieId?api_key=$apiKey&language=en-US");
+    final decodedReponse = jsonDecode((response.body));
+    genereList.clear();
+    decodedReponse["genres"].forEach((genere) {
+      genereList.add(genere["name"]);
+    });
+    notifyListeners();
+  }
+
   Future<void> fetchAll() async {
     final response = await http.get(
         "https://api.themoviedb.org/3/movie/upcoming?api_key=$apiKey&language=en-US&page=1");
@@ -20,7 +51,7 @@ class MovieApi with ChangeNotifier {
       if (response.statusCode == 200) {
         upComing.add(
           MovieModel(
-            adult: result["adult"],
+            adult: result["adult"].toString(),
             genere: result["genre_ids"],
             movieHorizontalPoster: result["backdrop_path"],
             movieId: result["id"],
@@ -44,7 +75,7 @@ class MovieApi with ChangeNotifier {
       if (response2.statusCode == 200) {
         popular.add(
           MovieModel(
-            adult: result["adult"],
+            adult: result["adult"].toString(),
             genere: result["genre_ids"],
             movieHorizontalPoster: result["backdrop_path"],
             movieId: result["id"],
@@ -68,7 +99,7 @@ class MovieApi with ChangeNotifier {
       if (response3.statusCode == 200) {
         topRated.add(
           MovieModel(
-            adult: result["adult"],
+            adult: result["adult"].toString(),
             genere: result["genre_ids"],
             movieHorizontalPoster: result["backdrop_path"],
             movieId: result["id"],
