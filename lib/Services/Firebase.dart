@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class FirebaseServices with ChangeNotifier {
   final _auth = FirebaseAuth.instance;
-  final user = FirebaseAuth.instance.currentUser.uid;
+  final user = FirebaseAuth.instance.currentUser;
   List<dynamic> myFavourites = [];
   void showErrorDiaglog(String title, String message, BuildContext context) {
     showDialog(
@@ -57,22 +57,24 @@ class FirebaseServices with ChangeNotifier {
   }
 
   Future<void> addFav(String movieID, List<dynamic> dynamicList) async {
-    print(user);
     int counter = 0;
 
     try {
       await FirebaseFirestore.instance
           .collection("favourites")
-          .doc(user)
+          .doc(user.uid)
           .get()
-          .then((value) {
+          .then((value) async {
         value.data().forEach((key, value) {
           if (key == movieID) {
             counter++;
           }
         });
         if (counter == 0) {
-          FirebaseFirestore.instance.collection("favourites").doc(user).set(
+          await FirebaseFirestore.instance
+              .collection("favourites")
+              .doc(user.uid)
+              .set(
             {"$movieID": dynamicList},
             SetOptions(merge: true),
           );
@@ -88,7 +90,7 @@ class FirebaseServices with ChangeNotifier {
     List<dynamic> myNewList = [];
     await FirebaseFirestore.instance
         .collection("favourites")
-        .doc(user)
+        .doc(user.uid)
         .get()
         .then((value) {
       value.data().forEach((key, value) {
@@ -105,7 +107,7 @@ class FirebaseServices with ChangeNotifier {
 
     await FirebaseFirestore.instance
         .collection("favourites")
-        .doc(user)
+        .doc(user.uid)
         .get()
         .then((value) {
       var isFav = value.data()[movieID][0];
@@ -116,15 +118,16 @@ class FirebaseServices with ChangeNotifier {
 
       FirebaseFirestore.instance
           .collection("favourites")
-          .doc(user)
+          .doc(user.uid)
           .update({"$movieID": myNewList});
     });
   }
 
+  // ignore: non_constant_identifier_names
   Future<void> SignInUser(
       String email, String password, BuildContext context) async {
     try {
-      final user = await _auth
+      await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .catchError((e) {
         if (e.toString().contains("The password is invalid"))
