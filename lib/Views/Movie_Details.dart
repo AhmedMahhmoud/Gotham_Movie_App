@@ -227,7 +227,8 @@ class MovieDetails extends StatelessWidget {
                                       style: fontColor,
                                     );
                                   },
-                                  future: Provider.of<MovieApi>(context,listen: false)
+                                  future: Provider.of<MovieApi>(context,
+                                          listen: false)
                                       .movieCast(movieID),
                                 )
                               ],
@@ -260,12 +261,14 @@ class MovieDetails extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TapDetails(
+                                movieID: movieID.toString(),
                                 fontAwesomeIcons: FontAwesomeIcons.solidStar,
                                 firstText: " $movieRate /",
                                 secondText: "10",
                                 iconColor: Colors.yellow[600],
                               ),
                               TapDetails(
+                                  movieID: movieID.toString(),
                                   fontAwesomeIcons: FontAwesomeIcons.heart,
                                   firstText: "Favourite ",
                                   secondText: "This",

@@ -5,7 +5,8 @@ import 'package:flutter/material.dart';
 
 class FirebaseServices with ChangeNotifier {
   final _auth = FirebaseAuth.instance;
-
+  final user = FirebaseAuth.instance.currentUser.uid;
+  List<String> myFavourites = [];
   void showErrorDiaglog(String title, String message, BuildContext context) {
     showDialog(
         context: context,
@@ -43,6 +44,11 @@ class FirebaseServices with ChangeNotifier {
           .set({
         "username": username.trim(),
         "email": userEmail.trim(),
+      }).then((value) async {
+        await FirebaseFirestore.instance
+            .collection("favourites")
+            .doc(user.user.uid)
+            .set({"id": ""});
       }).then((value) =>
               _auth.currentUser.updateProfile(displayName: username));
     } catch (e) {
@@ -50,25 +56,76 @@ class FirebaseServices with ChangeNotifier {
     }
   }
 
-  Future <void> SignInUser(String email, String password, BuildContext context) async{
-    try
-    {
-     final user = await _auth
-        .signInWithEmailAndPassword(email: email, password: password).catchError((e){
-          if (e.toString().contains("The password is invalid"))
-            showErrorDiaglog("Sign in Failed",
-                "Wrong password", context);
-          else if(e.toString().contains("There is no user record corresponding to this identifier"))
-            showErrorDiaglog("Sign in Failed",
-            "Invalid email", context);
+  Future<DocumentReference> addFav(String movieID) async {
+    print(user);
+    int counter = 0;
+    try {
+      await FirebaseFirestore.instance
+          .collection("favourites")
+          .doc(user)
+          .get()
+          .then((value) {
+        value.data().forEach((key, value) {
+          print(key);
+          if (key == movieID) {
+            counter++;
+          }
         });
-          
-    }
-    catch(e)
-    {
+        if (counter == 0) {
+          FirebaseFirestore.instance.collection("favourites").doc(user).set(
+            {"$movieID": false},
+            SetOptions(merge: true),
+          );
+        }
+      });
+    } catch (e) {
       print(e);
     }
-
   }
 
+  Future<DocumentReference> getFavMovies() async {
+    myFavourites = [];
+    await FirebaseFirestore.instance
+        .collection("favourites")
+        .doc(user)
+        .get()
+        .then((value) {
+      value.data().forEach((key, value) {
+        if (value == true) {
+          myFavourites.add(key);
+        }
+      });
+    });
+  }
+
+  Future<void> toggleFav(String movieID) async {
+    await FirebaseFirestore.instance
+        .collection("favourites")
+        .doc(user)
+        .get()
+        .then((value) {
+      FirebaseFirestore.instance
+          .collection("favourites")
+          .doc(user)
+          .update({"$movieID": !value.data()["$movieID"]});
+    });
+  }
+
+  Future<void> SignInUser(
+      String email, String password, BuildContext context) async {
+    try {
+      final user = await _auth
+          .signInWithEmailAndPassword(email: email, password: password)
+          .catchError((e) {
+        if (e.toString().contains("The password is invalid"))
+          showErrorDiaglog("Sign in Failed", "Wrong password", context);
+        else if (e.toString().contains(
+            "There is no user record corresponding to this identifier"))
+          showErrorDiaglog("Sign in Failed", "Invalid email", context);
+      });
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
+  }
 }

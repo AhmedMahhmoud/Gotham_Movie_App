@@ -128,7 +128,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                   CustomButton(
                                     text: Applocalications.of(context)
                                         .translation("third_string"),
-                                    onPressedd: () {         Get.to(Login());},
+                                    onPressedd: () {        
+                                          Navigator.of(context)
+                                          .push(MaterialPageRoute(
+                                        builder: (context) => Login()));},
                                     isLeftSide: true,
                                   ),
                                   SizedBox(
