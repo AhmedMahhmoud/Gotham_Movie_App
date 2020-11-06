@@ -1,8 +1,11 @@
 import 'dart:ui';
 
+
 import 'package:flutter/material.dart';
 
+
 import 'package:movies_app/Widgets/SignUpButtons.dart';
+
 
 const butColor = 0xFFFDE86A;
 
@@ -22,14 +25,16 @@ class _RegisterScreenState extends State<RegisterScreen>
     _buttonIn = CurvedAnimation(
         curve: Interval(0.75, 0.9), parent: _animationController);
     _animationController.forward();
-    // TODO: implement initState
+   
     super.initState();
   }
+
+  var futureValue;
 
   @override
   void dispose() {
     _animationController.dispose();
-    // TODO: implement dispose
+   
     super.dispose();
   }
 

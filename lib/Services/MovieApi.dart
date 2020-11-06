@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:movies_app/Models/MovieCastModel.dart';
 import 'dart:convert';
 import 'dart:async';
-import 'package:provider/provider.dart';
+
 import 'package:movies_app/Models/MovieModel.dart';
 
 const apiKey = "dc8c6ae585c2496b758c84803cd3868e";
@@ -63,7 +63,7 @@ class MovieApi with ChangeNotifier {
             movieTitle: result["title"],
           ),
         );
-        notifyListeners();
+      
       }
     });
 
@@ -87,7 +87,7 @@ class MovieApi with ChangeNotifier {
             movieTitle: result["title"],
           ),
         );
-        notifyListeners();
+        
       }
     });
 
@@ -111,7 +111,7 @@ class MovieApi with ChangeNotifier {
             movieTitle: result["title"],
           ),
         );
-        notifyListeners();
+       
       }
     });
   }

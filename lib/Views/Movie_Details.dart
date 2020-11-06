@@ -4,9 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:lottie/lottie.dart';
-import 'package:movies_app/Models/MovieCastModel.dart';
+
 import 'package:movies_app/Services/MovieApi.dart';
+import 'package:movies_app/Views/watchlist.dart';
 import 'package:movies_app/Widgets/CastWidget.dart';
 import 'package:movies_app/Widgets/GenereMovieDetails.dart';
 import 'package:movies_app/Widgets/TapMovieDetails.dart';
@@ -227,7 +227,8 @@ class MovieDetails extends StatelessWidget {
                                       style: fontColor,
                                     );
                                   },
-                                  future: Provider.of<MovieApi>(context)
+                                  future: Provider.of<MovieApi>(context,
+                                          listen: false)
                                       .movieCast(movieID),
                                 )
                               ],
@@ -260,16 +261,35 @@ class MovieDetails extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TapDetails(
+                                movieID: movieID.toString(),
                                 fontAwesomeIcons: FontAwesomeIcons.solidStar,
                                 firstText: " $movieRate /",
                                 secondText: "10",
                                 iconColor: Colors.yellow[600],
                               ),
                               TapDetails(
+                                  movieTitle: movieName,
+                                  moviePoster: moviePoster,
+                                  movieID: movieID.toString(),
                                   fontAwesomeIcons: FontAwesomeIcons.heart,
                                   firstText: "Favourite ",
                                   secondText: "This",
                                   iconColor: Colors.red),
+                              // RaisedButton(
+                              //   onPressed: (){
+                              //     Navigator.push(
+                              //       context,
+                              //       MaterialPageRoute(
+                              //         builder: (context){
+                              //           return Watchlist_screen(
+                              //             imageName: moviePoster,
+                              //             title: movieName,
+                              //           );
+                              //         }
+                              //       )
+                              //     );
+                              //   }
+                              // ),
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [

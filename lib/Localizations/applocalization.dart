@@ -34,14 +34,13 @@ class _AppLocalizationDelegate extends LocalizationsDelegate<Applocalications> {
   @override
   const _AppLocalizationDelegate();
   bool isSupported(Locale locale) {
-    // TODO: implement isSupported
-    //Include all of supported language codes
+   
     return ["en", "ar"].contains(locale.languageCode);
   }
 
   @override
   Future<Applocalications> load(Locale locale) async {
-    // TODO: implement load
+  
     Applocalications localizations = new Applocalications(locale);
     await localizations.load();
     return localizations;
@@ -49,7 +48,7 @@ class _AppLocalizationDelegate extends LocalizationsDelegate<Applocalications> {
 
   @override
   bool shouldReload(covariant LocalizationsDelegate<Applocalications> old) {
-    // TODO: implement shouldReload
+   
     return false;
   }
 }
