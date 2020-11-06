@@ -60,7 +60,7 @@ class MyApp extends StatelessWidget {
           },
           home: Scaffold(
             backgroundColor: Colors.black,
-            body: Home(),
+            body: MainScreen(),
           ) //Home(),
 
           ),
