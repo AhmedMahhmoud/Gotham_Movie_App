@@ -10,6 +10,8 @@ class TapDetails extends StatefulWidget {
     this.secondText,
     this.fontAwesomeIcons,
     this.iconColor,
+    this.moviePoster,
+    this.movieTitle,
     @required this.movieID,
     Key key,
   }) : super(key: key);
@@ -18,6 +20,8 @@ class TapDetails extends StatefulWidget {
   String firstText;
   final String secondText;
   final Color iconColor;
+  String moviePoster;
+  String movieTitle;
   String movieID;
 
   @override
@@ -28,7 +32,7 @@ class _TapDetailsState extends State<TapDetails> {
   @override
   void initState() {
     Provider.of<FirebaseServices>(context, listen: false)
-        .addFav(widget.movieID);
+        .addFav(widget.movieID, [false, widget.movieTitle, widget.moviePoster]);
     Provider.of<FirebaseServices>(context, listen: false).getFavMovies();
     // TODO: implement initState
     super.initState();

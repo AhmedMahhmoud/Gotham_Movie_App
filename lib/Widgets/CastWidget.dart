@@ -15,7 +15,6 @@ class CastWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(actorImage);
     return actor != ""
         ? Column(
             children: [

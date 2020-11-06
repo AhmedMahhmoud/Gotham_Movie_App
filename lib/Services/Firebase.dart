@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class FirebaseServices with ChangeNotifier {
   final _auth = FirebaseAuth.instance;
   final user = FirebaseAuth.instance.currentUser.uid;
-  List<String> myFavourites = [];
+  List<dynamic> myFavourites = [];
   void showErrorDiaglog(String title, String message, BuildContext context) {
     showDialog(
         context: context,
@@ -56,9 +56,10 @@ class FirebaseServices with ChangeNotifier {
     }
   }
 
-  Future<DocumentReference> addFav(String movieID) async {
+  Future<void> addFav(String movieID, List<dynamic> dynamicList) async {
     print(user);
     int counter = 0;
+
     try {
       await FirebaseFirestore.instance
           .collection("favourites")
@@ -66,14 +67,13 @@ class FirebaseServices with ChangeNotifier {
           .get()
           .then((value) {
         value.data().forEach((key, value) {
-          print(key);
           if (key == movieID) {
             counter++;
           }
         });
         if (counter == 0) {
           FirebaseFirestore.instance.collection("favourites").doc(user).set(
-            {"$movieID": false},
+            {"$movieID": dynamicList},
             SetOptions(merge: true),
           );
         }
@@ -83,31 +83,41 @@ class FirebaseServices with ChangeNotifier {
     }
   }
 
-  Future<DocumentReference> getFavMovies() async {
+  Future<void> getFavMovies() async {
     myFavourites = [];
+    List<dynamic> myNewList = [];
     await FirebaseFirestore.instance
         .collection("favourites")
         .doc(user)
         .get()
         .then((value) {
       value.data().forEach((key, value) {
-        if (value == true) {
-          myFavourites.add(key);
+        if (value[0] == true) {
+          myNewList = [value[0], value[1], value[2]];
+          myFavourites.add(myNewList);
         }
       });
     });
   }
 
   Future<void> toggleFav(String movieID) async {
+    List<dynamic> myNewList = [];
+
     await FirebaseFirestore.instance
         .collection("favourites")
         .doc(user)
         .get()
         .then((value) {
+      var isFav = value.data()[movieID][0];
+      var movieTitle = value.data()[movieID][1];
+      var moviePoster = value.data()[movieID][2];
+      myNewList.clear();
+      myNewList = [!isFav, movieTitle, moviePoster];
+
       FirebaseFirestore.instance
           .collection("favourites")
           .doc(user)
-          .update({"$movieID": !value.data()["$movieID"]});
+          .update({"$movieID": myNewList});
     });
   }
 
