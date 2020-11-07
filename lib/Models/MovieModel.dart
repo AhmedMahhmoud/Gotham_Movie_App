@@ -21,14 +21,4 @@ class MovieModel {
     this.movieTitle,
   });
 
-  /*Future<String> fetchTrailer() async {
-    String trailer;
-    final http.Response response = await http.get(
-        "https://api.themoviedb.org/3/movie/$movieId/videos?api_key=dc8c6ae585c2496b758c84803cd3868e&language=en-US");
-    final decodedResponse = jsonDecode(response.body);
-    decodedResponse["results"].forEach((result) {
-      trailer = result["key"];
-    });
-    return "https://www.youtube.com/watch?v="+trailer;
-  }*/
 }

@@ -77,12 +77,14 @@ class FirebaseServices with ChangeNotifier {
           );
         }
       });
+            notifyListeners();
+
     } catch (e) {
       print(e);
     }
   }
 
-  Future<void> getFavMovies() async {
+  Future<List<dynamic>> getFavMovies() async {
     myFavourites = [];
     List<dynamic> myNewList = [];
     await FirebaseFirestore.instance
@@ -96,6 +98,7 @@ class FirebaseServices with ChangeNotifier {
           myFavourites.add(myNewList);
         }
       });
+      return myFavourites;
     });
   }
 
@@ -118,6 +121,8 @@ class FirebaseServices with ChangeNotifier {
           .doc(user.uid)
           .update({"$movieID": myNewList});
     });
+          notifyListeners();
+
   }
 
   // ignore: non_constant_identifier_names

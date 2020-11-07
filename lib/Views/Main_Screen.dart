@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:movies_app/Services/Firebase.dart';
+
 import 'package:movies_app/Services/MovieApi.dart';
 
 import 'FavouritesScreen.dart';
@@ -22,18 +24,12 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   @override
-  void initState() {
-    print("main screen :");
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final uc = Provider.of<MovieApi>(context, listen: false).upComing;
     final pop = Provider.of<MovieApi>(context, listen: false).popular;
     final top = Provider.of<MovieApi>(context, listen: false).topRated;
     
+
     return Scaffold(
       floatingActionButton: Align(
         alignment: Alignment.bottomLeft,
@@ -53,7 +49,10 @@ class _MainScreenState extends State<MainScreen> {
       ),
       backgroundColor: Colors.black,
       body: FutureBuilder(
-        future: Provider.of<MovieApi>(context, listen: false).fetchAll(),
+        future: Future.wait([
+          Provider.of<MovieApi>(context, listen: false).fetchAll(),
+          Provider.of<FirebaseServices>(context).getFavMovies()
+        ]), //Provider.of<MovieApi>(context, listen: false).fetchAll(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -72,7 +71,7 @@ class _MainScreenState extends State<MainScreen> {
                   expandedHeight: 150,
                   flexibleSpace: FlexibleSpaceBar(
                       background: Stack(
-                        fit: StackFit.expand,
+                    fit: StackFit.expand,
                     children: [
                       CarouselSlider(
                         items: [
@@ -95,11 +94,7 @@ class _MainScreenState extends State<MainScreen> {
                           enableInfiniteScroll: true,
                         ),
                       ),
-                      Positioned(
-                        bottom: 10,
-                        right: 10,
-                        child: SearchButton()),
-                      
+                      Positioned(bottom: 10, right: 10, child: SearchButton()),
                     ],
                   )),
                 ),

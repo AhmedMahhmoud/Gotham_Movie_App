@@ -4,9 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-
+import '../Services/Firebase.dart';
 import 'package:movies_app/Services/MovieApi.dart';
-import 'package:movies_app/Views/watchlist.dart';
+import 'package:movies_app/Views/trailerPage.dart';
 import 'package:movies_app/Widgets/CastWidget.dart';
 import 'package:movies_app/Widgets/GenereMovieDetails.dart';
 import 'package:movies_app/Widgets/TapMovieDetails.dart';
@@ -22,6 +22,7 @@ class MovieDetails extends StatelessWidget {
   final String moviePoster;
   final int movieID;
   final String isAdult;
+  bool favBool = false;
 
   MovieDetails(
       {@required this.movieName,
@@ -33,6 +34,15 @@ class MovieDetails extends StatelessWidget {
       @required this.moviePoster});
   @override
   Widget build(BuildContext context) {
+    final fav = Provider.of<FirebaseServices>(context, listen: false).myFavourites;
+    for (int i = 0; i < fav.length; i++) {
+      print(fav[i][1]);
+      if (fav[i][1] == this.movieName) {
+        favBool = true;
+        break;
+      }
+    }
+    print(favBool);
     SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
         backgroundColor: Colors.transparent,
@@ -90,47 +100,53 @@ class MovieDetails extends StatelessWidget {
                                       height: 5,
                                     ),
                                     Row(
-                                        children: [
-                                          Text(
-                                            releaseDate,
-                                            style: TextStyle(color: Colors.grey),
+                                      children: [
+                                        Text(
+                                          releaseDate,
+                                          style: TextStyle(color: Colors.grey),
+                                        ),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(
+                                          "2h 32 min",
+                                          style: TextStyle(color: Colors.grey),
+                                        ),
+                                        Spacer(),
+                                        Container(
+                                          padding: EdgeInsets.all(5),
+                                          decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(15),
+                                            color: Color(0xffFF0000),
                                           ),
-                                          SizedBox(
-                                            width: 10,
-                                          ),
-                                          Text(
-                                            "2h 32 min",
-                                            style: TextStyle(color: Colors.grey),
-                                          ),
-                                          Spacer(),
-                                          Container(
-                                            padding: EdgeInsets.all(5),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(15),
-                                              color: Color(0xffFF0000),
-                                            ),
-                                            height: 50,
-                                            child: Row(
-                                              children: [
-                                                Text(
+                                          height: 50,
+                                          child: Row(
+                                            children: [
+                                              InkWell(
+                                                onTap: () => Get.to(TrailerPage(
+                                                    movieID,
+                                                    movieName,
+                                                    moviePoster)),
+                                                child: Text(
                                                   "WATCH TRAILER",
                                                   style: fontColor,
                                                 ),
-                                                SizedBox(
-                                                  width: 5,
-                                                ),
-                                                Center(
-                                                    child: FaIcon(
-                                                  FontAwesomeIcons.youtube,
-                                                  size: 34,
-                                                  color: Colors.white,
-                                                )),
-                                              ],
-                                            ),
-                                          )
-                                        ],
-                                      ),
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Center(
+                                                  child: FaIcon(
+                                                FontAwesomeIcons.youtube,
+                                                size: 34,
+                                                color: Colors.white,
+                                              )),
+                                            ],
+                                          ),
+                                        )
+                                      ],
+                                    ),
                                   ],
                                 ),
                                 SizedBox(
@@ -267,7 +283,17 @@ class MovieDetails extends StatelessWidget {
                                 secondText: "10",
                                 iconColor: Colors.yellow[600],
                               ),
-                              TapDetails(
+                              favBool ?
+                                  TapDetails(
+                                  movieTitle: movieName,
+                                  moviePoster: moviePoster,
+                                  movieID: movieID.toString(),
+                                  fontAwesomeIcons: FontAwesomeIcons.solidHeart,
+                                  firstText: "Unfavourite ",
+                                  secondText: "This",
+                                  iconColor: Colors.red)
+                              :
+                                TapDetails(
                                   movieTitle: movieName,
                                   moviePoster: moviePoster,
                                   movieID: movieID.toString(),
@@ -275,21 +301,7 @@ class MovieDetails extends StatelessWidget {
                                   firstText: "Favourite ",
                                   secondText: "This",
                                   iconColor: Colors.red),
-                              // RaisedButton(
-                              //   onPressed: (){
-                              //     Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //         builder: (context){
-                              //           return Watchlist_screen(
-                              //             imageName: moviePoster,
-                              //             title: movieName,
-                              //           );
-                              //         }
-                              //       )
-                              //     );
-                              //   }
-                              // ),
+
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
