@@ -41,7 +41,8 @@ dependencies:
   lottie: ^0.7.0+1
   firebase_auth: ^0.18.2
   firebase_core: ^0.5.1
-  
+  youtube_player_flutter: ^7.0.0+7
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
