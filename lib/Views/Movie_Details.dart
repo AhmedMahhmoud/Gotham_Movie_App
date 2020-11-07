@@ -115,7 +115,9 @@ class MovieDetails extends StatelessWidget {
                                             children: [
                                               InkWell(
                                                 onTap: () => Get.to(TrailerPage(
-                                                    movieID, movieName)),
+                                                    movieID,
+                                                    movieName,
+                                                    moviePoster)),
                                                 child: Text(
                                                   "WATCH TRAILER",
                                                   style: fontColor,
