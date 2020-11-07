@@ -57,7 +57,6 @@ class FirebaseServices with ChangeNotifier {
   }
 
   Future<void> addFav(String movieID, List<dynamic> dynamicList) async {
-    print(user.uid);
     int counter = 0;
 
     try {
@@ -65,7 +64,7 @@ class FirebaseServices with ChangeNotifier {
           .collection("favourites")
           .doc(user.uid)
           .get()
-          .then((value) {
+          .then((value) async {
         value.data().forEach((key, value) {
           if (key == movieID) {
             counter++;
@@ -121,10 +120,11 @@ class FirebaseServices with ChangeNotifier {
     });
   }
 
+  // ignore: non_constant_identifier_names
   Future<void> SignInUser(
       String email, String password, BuildContext context) async {
     try {
-      final user = await _auth
+      await _auth
           .signInWithEmailAndPassword(email: email, password: password)
           .catchError((e) {
         if (e.toString().contains("The password is invalid"))

@@ -23,7 +23,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
- 
+    print("main screen :");
     // TODO: implement initState
     super.initState();
   }
@@ -33,11 +33,12 @@ class _MainScreenState extends State<MainScreen> {
     final uc = Provider.of<MovieApi>(context, listen: false).upComing;
     final pop = Provider.of<MovieApi>(context, listen: false).popular;
     final top = Provider.of<MovieApi>(context, listen: false).topRated;
+    
     return Scaffold(
       floatingActionButton: Align(
         alignment: Alignment.bottomLeft,
         child: Padding(
-          padding: const EdgeInsets.only(left: 15),
+          padding: const EdgeInsets.only(left: 30),
           child: FloatingActionButton(
               tooltip: "Logout",
               onPressed: () async {

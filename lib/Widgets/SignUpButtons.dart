@@ -33,7 +33,6 @@ class _SignUpButtonsState extends State<SignUpButtons> {
         .where("email", isEqualTo: email)
         .get()
         .then((value) {
-    
       if (value.docs.length == 0) {
         setState(() {
           futureValue = true;
@@ -49,34 +48,38 @@ class _SignUpButtonsState extends State<SignUpButtons> {
   @override
   Widget build(BuildContext context) {
     void _saveForm(String operation) async {
-      final firebaseProvider =
-          Provider.of<FirebaseServices>(context, listen: false);
-      if (!_formKey.currentState.validate()) {
-        return;
-      }
-      _formKey.currentState.save();
-      if (operation == "REGISTER") {
-        await firebaseProvider
-            .signUpUser(_authmap["name"], _authmap["email"],
-                _authmap["password"], context)
-            .then((value) => Navigator.pop(context))
-            .catchError((e) {
-          print(e);
-        });
-      }
-      if (operation == "LOGIN") {
-        setState(() {
-          isLoading = true;
-        });
-        await firebaseProvider.SignInUser(
-                _authmap["email"], _authmap["password"], context)
-            .then((value) => Navigator.pop(context))
-            .catchError((e) {
-          print(e);
-        });
-        setState(() {
-          isLoading = false;
-        });
+      try {
+        final firebaseProvider =
+            Provider.of<FirebaseServices>(context, listen: false);
+        if (!_formKey.currentState.validate()) {
+          return;
+        }
+        _formKey.currentState.save();
+        if (operation == "REGISTER") {
+          await firebaseProvider
+              .signUpUser(_authmap["name"], _authmap["email"],
+                  _authmap["password"], context)
+              .then((value) => Navigator.pop(context))
+              .catchError((e) {
+            print(e);
+          });
+        }
+        if (operation == "LOGIN") {
+          setState(() {
+            isLoading = true;
+          });
+          await firebaseProvider.SignInUser(
+                  _authmap["email"], _authmap["password"], context)
+              .then((value) => Navigator.pop(context))
+              .catchError((e) {
+            print(e);
+          });
+          setState(() {
+            isLoading = false;
+          });
+        }
+      } catch (e) {
+        print(e);
       }
     }
 

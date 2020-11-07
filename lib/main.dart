@@ -70,12 +70,13 @@ class _MyAppState extends State<MyApp> {
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.waiting) {
               return CircularProgressIndicator();
-            } else {
+            } 
+            
               if (snapshot.hasData) {
                 print("going to main screen");
                 return MainScreen();
               }
-            }
+            
 
             return Home();
           },
