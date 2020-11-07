@@ -42,6 +42,13 @@ class MovieApi with ChangeNotifier {
     notifyListeners();
   }
 
+  Future<String> fetchTrailerId(String movieID) async {
+    final response = await http.get(
+        "https://api.themoviedb.org/3/movie/$movieID/videos?api_key=$apiKey&language=en-US");
+    final decodedResp = jsonDecode(response.body);
+    return decodedResp["results"][0]["key"];
+  }
+
   Future<void> fetchAll() async {
     final response = await http.get(
         "https://api.themoviedb.org/3/movie/upcoming?api_key=$apiKey&language=en-US&page=1");
@@ -63,7 +70,6 @@ class MovieApi with ChangeNotifier {
             movieTitle: result["title"],
           ),
         );
-      
       }
     });
 
@@ -87,7 +93,6 @@ class MovieApi with ChangeNotifier {
             movieTitle: result["title"],
           ),
         );
-        
       }
     });
 
@@ -111,7 +116,6 @@ class MovieApi with ChangeNotifier {
             movieTitle: result["title"],
           ),
         );
-       
       }
     });
   }
