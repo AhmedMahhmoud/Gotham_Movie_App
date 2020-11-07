@@ -28,6 +28,7 @@ class _MainScreenState extends State<MainScreen> {
     final uc = Provider.of<MovieApi>(context, listen: false).upComing;
     final pop = Provider.of<MovieApi>(context, listen: false).popular;
     final top = Provider.of<MovieApi>(context, listen: false).topRated;
+    //final fav = Provider.of<FirebaseServices>(context, listen: true, ).myFavourites;
     
 
     return Scaffold(
