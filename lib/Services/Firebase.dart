@@ -85,7 +85,7 @@ class FirebaseServices with ChangeNotifier {
     }
   }
 
-  Future<void> getFavMovies() async {
+  Future<List<dynamic>> getFavMovies() async {
     myFavourites = [];
     List<dynamic> myNewList = [];
     await FirebaseFirestore.instance
@@ -99,6 +99,7 @@ class FirebaseServices with ChangeNotifier {
           myFavourites.add(myNewList);
         }
       });
+      return myFavourites;
     });
   }
 

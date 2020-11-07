@@ -18,6 +18,7 @@ class SignUpButtons extends StatefulWidget {
 
 var obsecure = true;
 var isLoading = false;
+var futureValue = false;
 
 class _SignUpButtonsState extends State<SignUpButtons> {
   final _formKey = GlobalKey<FormState>();
@@ -26,9 +27,9 @@ class _SignUpButtonsState extends State<SignUpButtons> {
     'password': "",
     'name': "",
   };
-  var futureValue = false;
+
   Future<bool> emailAvailable(String email) async {
-    final response = await FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection("users")
         .where("email", isEqualTo: email)
         .get()
@@ -56,12 +57,18 @@ class _SignUpButtonsState extends State<SignUpButtons> {
         }
         _formKey.currentState.save();
         if (operation == "REGISTER") {
+          setState(() {
+            isLoading = true;
+          });
           await firebaseProvider
               .signUpUser(_authmap["name"], _authmap["email"],
                   _authmap["password"], context)
               .then((value) => Navigator.pop(context))
               .catchError((e) {
             print(e);
+          });
+          setState(() {
+            isLoading = false;
           });
         }
         if (operation == "LOGIN") {
@@ -135,9 +142,11 @@ class _SignUpButtonsState extends State<SignUpButtons> {
               (value.contains("@") && value.contains(".com"))) {
             emailAvailable(value);
           } else {
-            setState(() {
-              futureValue = false;
-            });
+            if (label == "Email") {
+              setState(() {
+                futureValue = false;
+              });
+            }
           }
         },
         obscureText: obsecure,

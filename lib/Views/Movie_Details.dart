@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 import 'package:movies_app/Services/MovieApi.dart';
+import 'package:movies_app/Views/trailerPage.dart';
 import 'package:movies_app/Views/watchlist.dart';
 import 'package:movies_app/Widgets/CastWidget.dart';
 import 'package:movies_app/Widgets/GenereMovieDetails.dart';
@@ -113,9 +114,13 @@ class MovieDetails extends StatelessWidget {
                                           height: 50,
                                           child: Row(
                                             children: [
-                                              Text(
-                                                "WATCH TRAILER",
-                                                style: fontColor,
+                                              InkWell(
+                                                onTap: () => Get.to(TrailerPage(
+                                                    movieID, movieName)),
+                                                child: Text(
+                                                  "WATCH TRAILER",
+                                                  style: fontColor,
+                                                ),
                                               ),
                                               SizedBox(
                                                 width: 5,

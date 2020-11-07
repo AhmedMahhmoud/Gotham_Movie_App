@@ -22,6 +22,7 @@ class _MoviesWheelState extends State<MoviesWheel> {
       child: AspectRatio(
         aspectRatio: 1.6,
         child: PageView.builder(
+          physics: PageScrollPhysics(),
           itemCount: widget.movieModel.length,
           controller: pageController,
           itemBuilder: (context, index) => Container(
