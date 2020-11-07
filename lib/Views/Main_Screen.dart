@@ -22,6 +22,15 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    print(Provider.of<MovieApi>(context, listen: false).duraion(531219));
+    super.initState();
+
+  }
+
   @override
   Widget build(BuildContext context) {
     final uc = Provider.of<MovieApi>(context, listen: false).upComing;

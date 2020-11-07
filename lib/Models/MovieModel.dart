@@ -8,6 +8,7 @@ class MovieModel {
   String adult;
   String movieHorizontalPoster;
   List<dynamic> genere;
+  
 
   MovieModel({
     this.adult,

@@ -40,43 +40,45 @@ class _TapDetailsState extends State<TapDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        InkWell(
-          onTap: () {
-            Provider.of<FirebaseServices>(context, listen: false)
-                .toggleFav(widget.movieID);
-            if (widget.fontAwesomeIcons != FontAwesomeIcons.star &&
-                widget.fontAwesomeIcons != FontAwesomeIcons.solidStar)
-              setState(() {
-                widget.fontAwesomeIcons == FontAwesomeIcons.heart
-                    ? widget.fontAwesomeIcons = FontAwesomeIcons.solidHeart
-                    : widget.fontAwesomeIcons = FontAwesomeIcons.heart;
+    return SingleChildScrollView(
+          child: Column(
+        children: [
+          InkWell(
+            onTap: () {
+              Provider.of<FirebaseServices>(context, listen: false)
+                  .toggleFav(widget.movieID);
+              if (widget.fontAwesomeIcons != FontAwesomeIcons.star &&
+                  widget.fontAwesomeIcons != FontAwesomeIcons.solidStar)
+                setState(() {
+                  widget.fontAwesomeIcons == FontAwesomeIcons.heart
+                      ? widget.fontAwesomeIcons = FontAwesomeIcons.solidHeart
+                      : widget.fontAwesomeIcons = FontAwesomeIcons.heart;
 
-                widget.firstText == "Favourite "
-                    ? widget.firstText = "Unfavourite "
-                    : widget.firstText = "Favourite ";
-              });
-          },
-          child: FaIcon(
-            widget.fontAwesomeIcons,
-            color: widget.iconColor,
+                  widget.firstText == "Favourite "
+                      ? widget.firstText = "Unfavourite "
+                      : widget.firstText = "Favourite ";
+                });
+            },
+            child: FaIcon(
+              widget.fontAwesomeIcons,
+              color: widget.iconColor,
+            ),
           ),
-        ),
-        SizedBox(
-          height: 5,
-        ),
-        Row(
-          children: [
-            Text(widget.firstText,
-                style: TextStyle(fontWeight: FontWeight.bold)),
-            Text(widget.secondText,
-                style: TextStyle(
-                  color: Colors.grey[700],
-                ))
-          ],
-        )
-      ],
+          SizedBox(
+            height: 5,
+          ),
+          Row(
+            children: [
+              Text(widget.firstText,
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              Text(widget.secondText,
+                  style: TextStyle(
+                    color: Colors.grey[700],
+                  ))
+            ],
+          )
+        ],
+      ),
     );
   }
 }

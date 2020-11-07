@@ -98,9 +98,20 @@ class MovieDetails extends StatelessWidget {
                                         SizedBox(
                                           width: 10,
                                         ),
-                                        Text(
-                                          "2h 32 min",
-                                          style: TextStyle(color: Colors.grey),
+                                        FutureBuilder(
+                                          future: Provider.of<MovieApi>(context, listen: false).duraion(movieID),
+                                          builder: (context, snapshot) {
+                                          if (snapshot.connectionState == ConnectionState.waiting) {
+                                            return Center(
+                                              child: Container(),
+                                            );
+                                          }
+                                            return Text(
+                                                snapshot.data,
+                                                style: TextStyle(color: Colors.grey),
+                                              );
+                                            }
+                                           
                                         ),
                                         Spacer(),
                                         Container(
@@ -296,22 +307,24 @@ class MovieDetails extends StatelessWidget {
                               //     );
                               //   }
                               // ),
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "+18",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18),
-                                  ),
-                                  FaIcon(
-                                    isAdult == "false"
-                                        ? FontAwesomeIcons.times
-                                        : FontAwesomeIcons.check,
-                                    color: Colors.red[700],
-                                  )
-                                ],
+                              SingleChildScrollView(
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      "+18",
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 18),
+                                    ),
+                                    FaIcon(
+                                      isAdult == "false"
+                                          ? FontAwesomeIcons.times
+                                          : FontAwesomeIcons.check,
+                                      color: Colors.red[700],
+                                    )
+                                  ],
+                                ),
                               )
                             ],
                           ),
