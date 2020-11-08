@@ -12,6 +12,7 @@ import 'FavouritesScreen.dart';
 
 import 'package:movies_app/Widgets/movies_wheel.dart';
 import 'package:movies_app/Widgets/myWatchListButton.dart';
+import 'package:movies_app/Widgets/searchButton.dart';
 import 'package:provider/provider.dart';
 import '../Widgets/thetab.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -22,19 +23,25 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+<<<<<<< HEAD
 
 
 
+=======
+>>>>>>> d7ef2d14f168e827fb90a441a1e2bf173c8ba65b
   @override
   Widget build(BuildContext context) {
     final uc = Provider.of<MovieApi>(context, listen: false).upComing;
     final pop = Provider.of<MovieApi>(context, listen: false).popular;
     final top = Provider.of<MovieApi>(context, listen: false).topRated;
+    //final fav = Provider.of<FirebaseServices>(context, listen: true, ).myFavourites;
+    
+
     return Scaffold(
       floatingActionButton: Align(
         alignment: Alignment.bottomLeft,
         child: Padding(
-          padding: const EdgeInsets.only(left: 15),
+          padding: const EdgeInsets.only(left: 30),
           child: FloatingActionButton(
               tooltip: "Logout",
               onPressed: () async {
@@ -49,7 +56,10 @@ class _MainScreenState extends State<MainScreen> {
       ),
       backgroundColor: Colors.black,
       body: FutureBuilder(
-        future: Provider.of<MovieApi>(context, listen: false).fetchAll(),
+        future: Future.wait([
+          Provider.of<MovieApi>(context, listen: false).fetchAll(),
+          Provider.of<FirebaseServices>(context).getFavMovies()
+        ]), //Provider.of<MovieApi>(context, listen: false).fetchAll(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -67,26 +77,32 @@ class _MainScreenState extends State<MainScreen> {
                   floating: false,
                   expandedHeight: 150,
                   flexibleSpace: FlexibleSpaceBar(
-                      background: CarouselSlider(
-                    items: [
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          image: DecorationImage(
-                            image: NetworkImage(
-                                'https://a-static.besthdwallpaper.com/the-dark-knight-rises-movie-poster-wallpaper-2560x1024-12624_99.jpg'),
-                            fit: BoxFit.fill,
+                      background: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      CarouselSlider(
+                        items: [
+                          Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              image: DecorationImage(
+                                image: NetworkImage(
+                                    'https://assets.fontsinuse.com/static/use-media-items/27/26618/full-1500x693/567022b0/interstellar_ver6_xlg.jpeg?resolution=0'),
+                                fit: BoxFit.fill,
+                              ),
+                            ),
                           ),
+                        ],
+                        options: CarouselOptions(
+                          initialPage: 0,
+                          viewportFraction: 1,
+                          scrollDirection: Axis.vertical,
+                          autoPlay: true,
+                          enableInfiniteScroll: true,
                         ),
                       ),
+                      Positioned(bottom: 10, right: 10, child: SearchButton()),
                     ],
-                    options: CarouselOptions(
-                      initialPage: 0,
-                      viewportFraction: 1,
-                      scrollDirection: Axis.vertical,
-                      autoPlay: true,
-                      enableInfiniteScroll: true,
-                    ),
                   )),
                 ),
                 SliverList(

@@ -21,4 +21,5 @@ class MovieModel {
     this.movieSummary,
     this.movieTitle,
   });
+
 }

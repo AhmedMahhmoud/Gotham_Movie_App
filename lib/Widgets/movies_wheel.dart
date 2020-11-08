@@ -36,6 +36,7 @@ class _MoviesWheelState extends State<MoviesWheel> {
                   movieRate: widget.movieModel[index].movieRate,
                   movieSummary: widget.movieModel[index].movieSummary,
                   releaseDate: widget.movieModel[index].movieReleaseDate,
+                  
                 ));
               },
               child: Column(

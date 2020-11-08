@@ -12,9 +12,10 @@ class MovieApi with ChangeNotifier {
   List<MovieModel> upComing = [];
   List<MovieModel> popular = [];
   List<MovieModel> topRated = [];
+  List<MovieModel> recommend = [];
   List<MovieCastModel> movieCastModel = [];
   List<String> genereList = [];
-  int duration;
+
   Future<void> movieCast(int movieId) async {
     final response = await http.get(
         "https://api.themoviedb.org/3/movie/$movieId/credits?api_key=$apiKey");
@@ -29,20 +30,6 @@ class MovieApi with ChangeNotifier {
             actorNameInMovie: actor["character"]));
       }
     });
-    notifyListeners();
-  }
-
-  Future<String> duraion(int movieID) async{
-    final response = await http.get(
-      "https://api.themoviedb.org/3/movie/$movieID?api_key=$apiKey&language=en-US"
-    );
-    final decodedResponse = jsonDecode(response.body);
-    duration = decodedResponse["runtime"];
-    int min = duration%60;
-    double hours = duration/60;
-    int hrs = hours.toInt();
-    String result = "$hrs h $min mins";
-    return result;
     notifyListeners();
   }
 
@@ -65,7 +52,6 @@ class MovieApi with ChangeNotifier {
   }
 
   Future<void> fetchAll() async {
-    
     final response = await http.get(
         "https://api.themoviedb.org/3/movie/upcoming?api_key=$apiKey&language=en-US&page=1");
     final decodedResponse = jsonDecode(response.body);
@@ -135,4 +121,33 @@ class MovieApi with ChangeNotifier {
       }
     });
   }
+
+  Future<void> fetchRecommended(int movieId) async
+  {
+    final response = await http.get(
+        "https://api.themoviedb.org/3/movie/$movieId/recommendations?api_key=$apiKey&language=en-US&page=1");
+    final decodedResponse = jsonDecode(response.body);
+    recommend.clear();
+    decodedResponse["results"].forEach((result) {
+      if (response.statusCode == 200) {
+        recommend.add(
+          MovieModel(
+            adult: result["adult"].toString(),
+            genere: result["genre_ids"],
+            movieHorizontalPoster: result["backdrop_path"],
+            movieId: result["id"],
+            movieRate: result["vote_average"],
+            moviePoster:
+                "https://image.tmdb.org/t/p/w500" + result["poster_path"],
+            movieReleaseDate: result["release_date"],
+            movieSummary: result["overview"],
+            movieTitle: result["title"],
+          ),
+        );
+      
+      }
+    });
+  }
+
+  
 }
