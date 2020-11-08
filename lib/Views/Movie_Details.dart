@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
+import 'package:movies_app/Services/Firebase.dart';
 
 import 'package:movies_app/Services/MovieApi.dart';
 import 'package:movies_app/Views/trailerPage.dart';
@@ -14,7 +15,7 @@ import 'package:provider/provider.dart';
 
 const fontColor = TextStyle(color: Colors.white);
 
-class MovieDetails extends StatelessWidget {
+class MovieDetails extends StatefulWidget {
   final String movieSummary;
   final String movieName;
   final String releaseDate;
@@ -31,6 +32,27 @@ class MovieDetails extends StatelessWidget {
       @required this.movieID,
       @required this.isAdult,
       @required this.moviePoster});
+
+  @override
+  _MovieDetailsState createState() => _MovieDetailsState();
+}
+
+class _MovieDetailsState extends State<MovieDetails> {
+  Future<void> addAndGetFav() async {
+    await Provider.of<FirebaseServices>(context, listen: false).addFav(
+        widget.movieID.toString(),
+        [false, widget.movieName, widget.moviePoster]);
+
+    await Provider.of<FirebaseServices>(context, listen: false).getFavMovies();
+  }
+
+  @override
+  void initState() {
+    addAndGetFav();
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
@@ -38,7 +60,7 @@ class MovieDetails extends StatelessWidget {
         backgroundColor: Colors.transparent,
         body: FutureBuilder(
             future: Provider.of<MovieApi>(context, listen: false)
-                .fetchGenere(movieID),
+                .fetchGenere(widget.movieID),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.waiting) {
                 return Center(
@@ -68,7 +90,7 @@ class MovieDetails extends StatelessWidget {
                                   bottomLeft: Radius.circular(50)),
                               child: Image(
                                   fit: BoxFit.fill,
-                                  image: NetworkImage(moviePoster)),
+                                  image: NetworkImage(widget.moviePoster)),
                             ),
                           ),
                           SizedBox(
@@ -84,7 +106,7 @@ class MovieDetails extends StatelessWidget {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     TitlesWithStyle(
-                                      title: movieName,
+                                      title: widget.movieName,
                                     ),
                                     SizedBox(
                                       height: 5,
@@ -92,27 +114,30 @@ class MovieDetails extends StatelessWidget {
                                     Row(
                                       children: [
                                         Text(
-                                          releaseDate,
+                                          widget.releaseDate,
                                           style: TextStyle(color: Colors.grey),
                                         ),
                                         SizedBox(
                                           width: 10,
                                         ),
                                         FutureBuilder(
-                                          future: Provider.of<MovieApi>(context, listen: false).duraion(movieID),
-                                          builder: (context, snapshot) {
-                                          if (snapshot.connectionState == ConnectionState.waiting) {
-                                            return Center(
-                                              child: Container(),
-                                            );
-                                          }
-                                            return Text(
+                                            future: Provider.of<MovieApi>(
+                                                    context,
+                                                    listen: false)
+                                                .duraion(widget.movieID),
+                                            builder: (context, snapshot) {
+                                              if (snapshot.connectionState ==
+                                                  ConnectionState.waiting) {
+                                                return Center(
+                                                  child: Container(),
+                                                );
+                                              }
+                                              return Text(
                                                 snapshot.data,
-                                                style: TextStyle(color: Colors.grey),
+                                                style: TextStyle(
+                                                    color: Colors.grey),
                                               );
-                                            }
-                                           
-                                        ),
+                                            }),
                                         Spacer(),
                                         Container(
                                           padding: EdgeInsets.all(5),
@@ -126,9 +151,9 @@ class MovieDetails extends StatelessWidget {
                                             children: [
                                               InkWell(
                                                 onTap: () => Get.to(TrailerPage(
-                                                    movieID,
-                                                    movieName,
-                                                    moviePoster)),
+                                                    widget.movieID,
+                                                    widget.movieName,
+                                                    widget.moviePoster)),
                                                 child: Text(
                                                   "WATCH TRAILER",
                                                   style: fontColor,
@@ -182,7 +207,7 @@ class MovieDetails extends StatelessWidget {
                                   title: "Plot Summary",
                                 ),
                                 Text(
-                                  movieSummary,
+                                  widget.movieSummary,
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       fontSize: 12,
@@ -246,7 +271,7 @@ class MovieDetails extends StatelessWidget {
                                   },
                                   future: Provider.of<MovieApi>(context,
                                           listen: false)
-                                      .movieCast(movieID),
+                                      .movieCast(widget.movieID),
                                 )
                               ],
                             ),
@@ -278,16 +303,16 @@ class MovieDetails extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               TapDetails(
-                                movieID: movieID.toString(),
+                                movieID: widget.movieID.toString(),
                                 fontAwesomeIcons: FontAwesomeIcons.solidStar,
-                                firstText: " $movieRate /",
+                                firstText: " ${widget.movieRate} /",
                                 secondText: "10",
                                 iconColor: Colors.yellow[600],
                               ),
                               TapDetails(
-                                  movieTitle: movieName,
-                                  moviePoster: moviePoster,
-                                  movieID: movieID.toString(),
+                                  movieTitle: widget.movieName,
+                                  moviePoster: widget.moviePoster,
+                                  movieID: widget.movieID.toString(),
                                   fontAwesomeIcons: FontAwesomeIcons.heart,
                                   firstText: "Favourite ",
                                   secondText: "This",
@@ -318,7 +343,7 @@ class MovieDetails extends StatelessWidget {
                                           fontSize: 18),
                                     ),
                                     FaIcon(
-                                      isAdult == "false"
+                                      widget.isAdult == "false"
                                           ? FontAwesomeIcons.times
                                           : FontAwesomeIcons.check,
                                       color: Colors.red[700],
