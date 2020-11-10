@@ -1,11 +1,11 @@
-import 'package:flutter/gestures.dart';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:movies_app/Models/MovieModel.dart';
 import 'package:movies_app/Views/Movie_Details.dart';
 
 class MoviesWheel extends StatefulWidget {
-  List<MovieModel> movieModel;
+  final List<MovieModel> movieModel;
   MoviesWheel(this.movieModel);
   @override
   _MoviesWheelState createState() => _MoviesWheelState();
@@ -36,6 +36,7 @@ class _MoviesWheelState extends State<MoviesWheel> {
                   movieRate: widget.movieModel[index].movieRate,
                   movieSummary: widget.movieModel[index].movieSummary,
                   releaseDate: widget.movieModel[index].movieReleaseDate,
+                  
                 ));
               },
               child: Column(

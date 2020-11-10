@@ -71,15 +71,13 @@ class FirebaseServices with ChangeNotifier {
           }
         });
         if (counter == 0) {
-          await FirebaseFirestore.instance
-              .collection("favourites")
-              .doc(user.uid)
-              .set(
+          FirebaseFirestore.instance.collection("favourites").doc(user.uid).set(
             {"$movieID": dynamicList},
             SetOptions(merge: true),
           );
         }
       });
+      notifyListeners();
     } catch (e) {
       print(e);
     }

@@ -29,19 +29,14 @@ class TapDetails extends StatefulWidget {
 }
 
 class _TapDetailsState extends State<TapDetails> {
-  @override
-  void initState() {
-    Provider.of<FirebaseServices>(context, listen: false)
-        .addFav(widget.movieID, [false, widget.movieTitle, widget.moviePoster]);
-    Provider.of<FirebaseServices>(context, listen: false).getFavMovies();
-    // TODO: implement initState
-    super.initState();
-  }
+ 
+
+  
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-          child: Column(
+      child: Column(
         children: [
           InkWell(
             onTap: () {

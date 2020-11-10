@@ -13,7 +13,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
-
+  
   Animation<double> _animationLogin;
   Animation<double> _animationMoveUp;
   Animation<double> _batmanIn;
@@ -21,10 +21,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   AnimationController _animationController;
   void setFirstAnimations() {
     _animationController =
-        AnimationController(vsync:this, duration: Duration(seconds: 3));
+        AnimationController(vsync: this, duration: Duration(seconds: 3));
     _animationLogin = Tween(begin: 20.0, end: 1.0).animate(CurvedAnimation(
         curve: Interval(0.0, 0.25), parent: _animationController));
-   
+
     _animationMoveUp = CurvedAnimation(
         curve: Interval(0.15, 0.50), parent: _animationController);
     _batmanIn = Tween(begin: 0.0, end: 1.0).animate(CurvedAnimation(
@@ -45,7 +45,6 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   void dispose() {
     _animationController.dispose();
 
-  
     super.dispose();
   }
 
@@ -128,10 +127,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                                   CustomButton(
                                     text: Applocalications.of(context)
                                         .translation("third_string"),
-                                    onPressedd: () {        
-                                          Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                        builder: (context) => Login()));},
+                                    onPressedd: () {
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) => Login()));
+                                    },
                                     isLeftSide: true,
                                   ),
                                   SizedBox(
