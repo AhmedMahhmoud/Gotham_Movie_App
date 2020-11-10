@@ -83,6 +83,7 @@ class FirebaseServices with ChangeNotifier {
     } catch (e) {
       print(e);
     }
+    notifyListeners();
   }
 
   Future<List<dynamic>> getFavMovies() async {
@@ -122,6 +123,7 @@ class FirebaseServices with ChangeNotifier {
           .doc(user.uid)
           .update({"$movieID": myNewList});
     });
+    notifyListeners();
   }
 
   // ignore: non_constant_identifier_names
