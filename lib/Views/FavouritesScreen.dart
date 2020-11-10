@@ -4,8 +4,8 @@ import 'package:movies_app/Services/Firebase.dart';
 import 'package:provider/provider.dart';
 
 class FavouritesScreen extends StatelessWidget {
-  List<dynamic> movieList;
-  FavouritesScreen(this.movieList);
+  
+
   @override
   Widget build(BuildContext context) {
     final favProvider = Provider.of<FirebaseServices>(context, listen: false);

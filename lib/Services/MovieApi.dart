@@ -15,6 +15,18 @@ class MovieApi with ChangeNotifier {
   List<MovieModel> recommend = [];
   List<MovieCastModel> movieCastModel = [];
   List<String> genereList = [];
+  var duration;
+  Future<String> duraion(int movieID) async {
+    final response = await http.get(
+        "https://api.themoviedb.org/3/movie/$movieID?api_key=$apiKey&language=en-US");
+    final decodedResponse = jsonDecode(response.body);
+    duration = decodedResponse["runtime"];
+    int min = duration % 60;
+    double hours = duration / 60;
+    int hrs = hours.toInt();
+    String result = "$hrs h $min mins";
+    return result;
+  }
 
   Future<void> movieCast(int movieId) async {
     final response = await http.get(
@@ -51,9 +63,9 @@ class MovieApi with ChangeNotifier {
     return decodedResp["results"][0]["key"];
   }
 
-  Future<void> fetchAll() async {
+  Future<void> fetchAll(int pageno) async {
     final response = await http.get(
-        "https://api.themoviedb.org/3/movie/upcoming?api_key=$apiKey&language=en-US&page=1");
+        "https://api.themoviedb.org/3/movie/upcoming?api_key=$apiKey&language=en-US&page=$pageno");
     final decodedResponse = jsonDecode(response.body);
     upComing.clear();
     decodedResponse["results"].forEach((result) {
@@ -73,14 +85,16 @@ class MovieApi with ChangeNotifier {
           ),
         );
       }
+      notifyListeners();
     });
 
     final response2 = await http.get(
-        "https://api.themoviedb.org/3/movie/popular?api_key=$apiKey&language=en-US&page=1");
+        "https://api.themoviedb.org/3/movie/popular?api_key=$apiKey&language=en-US&page=$pageno");
     final decodedResponse2 = jsonDecode(response2.body);
     popular.clear();
     decodedResponse2["results"].forEach((result) {
       if (response2.statusCode == 200) {
+        print(pageno);
         popular.add(
           MovieModel(
             adult: result["adult"].toString(),
@@ -96,10 +110,11 @@ class MovieApi with ChangeNotifier {
           ),
         );
       }
+      notifyListeners();
     });
 
     final response3 = await http.get(
-        "https://api.themoviedb.org/3/movie/top_rated?api_key=$apiKey&language=en-US&page=1");
+        "https://api.themoviedb.org/3/movie/top_rated?api_key=$apiKey&language=en-US&page=$pageno");
     final decodedResponse3 = jsonDecode(response3.body);
     topRated.clear();
     decodedResponse3["results"].forEach((result) {
@@ -119,11 +134,11 @@ class MovieApi with ChangeNotifier {
           ),
         );
       }
+      notifyListeners();
     });
   }
 
-  Future<void> fetchRecommended(int movieId) async
-  {
+  Future<void> fetchRecommended(int movieId) async {
     final response = await http.get(
         "https://api.themoviedb.org/3/movie/$movieId/recommendations?api_key=$apiKey&language=en-US&page=1");
     final decodedResponse = jsonDecode(response.body);
@@ -144,10 +159,7 @@ class MovieApi with ChangeNotifier {
             movieTitle: result["title"],
           ),
         );
-      
       }
     });
   }
-
-  
 }

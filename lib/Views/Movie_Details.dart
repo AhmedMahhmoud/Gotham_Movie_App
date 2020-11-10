@@ -4,12 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-<<<<<<< HEAD
 import 'package:movies_app/Services/Firebase.dart';
-
-=======
-import '../Services/Firebase.dart';
->>>>>>> d7ef2d14f168e827fb90a441a1e2bf173c8ba65b
 import 'package:movies_app/Services/MovieApi.dart';
 import 'package:movies_app/Views/trailerPage.dart';
 import 'package:movies_app/Widgets/CastWidget.dart';
@@ -43,32 +38,27 @@ class MovieDetails extends StatefulWidget {
 }
 
 class _MovieDetailsState extends State<MovieDetails> {
-  Future<void> addAndGetFav() async {
-    await Provider.of<FirebaseServices>(context, listen: false).addFav(
-        widget.movieID.toString(),
-        [false, widget.movieName, widget.moviePoster]);
-
-    await Provider.of<FirebaseServices>(context, listen: false).getFavMovies();
-  }
-
   @override
   void initState() {
-    addAndGetFav();
+    Provider.of<FirebaseServices>(context, listen: false).addFav(
+        widget.movieID.toString(),
+        [false, widget.movieName, widget.moviePoster]);
     // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final fav = Provider.of<FirebaseServices>(context, listen: false).myFavourites;
+    final fav =
+        Provider.of<FirebaseServices>(context, listen: false).myFavourites;
     for (int i = 0; i < fav.length; i++) {
       print(fav[i][1]);
-      if (fav[i][1] == this.movieName) {
-        favBool = true;
+      if (fav[i][1] == widget.movieName) {
+        widget.favBool = true;
         break;
       }
     }
-    print(favBool);
+
     SystemChrome.setEnabledSystemUIOverlays([]);
     return Scaffold(
         backgroundColor: Colors.transparent,
@@ -134,7 +124,6 @@ class _MovieDetailsState extends State<MovieDetails> {
                                         SizedBox(
                                           width: 10,
                                         ),
-<<<<<<< HEAD
                                         FutureBuilder(
                                             future: Provider.of<MovieApi>(
                                                     context,
@@ -153,12 +142,6 @@ class _MovieDetailsState extends State<MovieDetails> {
                                                     color: Colors.grey),
                                               );
                                             }),
-=======
-                                        Text(
-                                          "2h 32 min",
-                                          style: TextStyle(color: Colors.grey),
-                                        ),
->>>>>>> d7ef2d14f168e827fb90a441a1e2bf173c8ba65b
                                         Spacer(),
                                         Container(
                                           padding: EdgeInsets.all(5),
@@ -330,47 +313,24 @@ class _MovieDetailsState extends State<MovieDetails> {
                                 secondText: "10",
                                 iconColor: Colors.yellow[600],
                               ),
-<<<<<<< HEAD
-                              TapDetails(
+                              widget.favBool ?
+                                  TapDetails(
                                   movieTitle: widget.movieName,
                                   moviePoster: widget.moviePoster,
                                   movieID: widget.movieID.toString(),
-=======
-                              favBool ?
-                                  TapDetails(
-                                  movieTitle: movieName,
-                                  moviePoster: moviePoster,
-                                  movieID: movieID.toString(),
                                   fontAwesomeIcons: FontAwesomeIcons.solidHeart,
                                   firstText: "Unfavourite ",
                                   secondText: "This",
                                   iconColor: Colors.red)
                               :
                                 TapDetails(
-                                  movieTitle: movieName,
-                                  moviePoster: moviePoster,
-                                  movieID: movieID.toString(),
->>>>>>> d7ef2d14f168e827fb90a441a1e2bf173c8ba65b
+                                  movieTitle: widget.movieName,
+                                  moviePoster: widget.moviePoster,
+                                  movieID: widget.movieID.toString(),
                                   fontAwesomeIcons: FontAwesomeIcons.heart,
                                   firstText: "Favourite ",
                                   secondText: "This",
                                   iconColor: Colors.red),
-<<<<<<< HEAD
-                              // RaisedButton(
-                              //   onPressed: (){
-                              //     Navigator.push(
-                              //       context,
-                              //       MaterialPageRoute(
-                              //         builder: (context){
-                              //           return Watchlist_screen(
-                              //             imageName: moviePoster,
-                              //             title: movieName,
-                              //           );
-                              //         }
-                              //       )
-                              //     );
-                              //   }
-                              // ),
                               SingleChildScrollView(
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
@@ -389,25 +349,6 @@ class _MovieDetailsState extends State<MovieDetails> {
                                     )
                                   ],
                                 ),
-=======
-
-                              Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    "+18",
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 18),
-                                  ),
-                                  FaIcon(
-                                    isAdult == "false"
-                                        ? FontAwesomeIcons.times
-                                        : FontAwesomeIcons.check,
-                                    color: Colors.red[700],
-                                  )
-                                ],
->>>>>>> d7ef2d14f168e827fb90a441a1e2bf173c8ba65b
                               )
                             ],
                           ),

@@ -77,8 +77,7 @@ class FirebaseServices with ChangeNotifier {
           );
         }
       });
-            notifyListeners();
-
+      notifyListeners();
     } catch (e) {
       print(e);
     }
@@ -121,8 +120,7 @@ class FirebaseServices with ChangeNotifier {
           .doc(user.uid)
           .update({"$movieID": myNewList});
     });
-          notifyListeners();
-
+    notifyListeners();
   }
 
   // ignore: non_constant_identifier_names
